@@ -26,6 +26,19 @@
   tags:
     - sas
 
+- name: Install python3 pip
+  yum:
+    name: python3-pip
+    state: present
+
+- name: Install gdown for remote download
+  shell: pip3 install gdown
+  
+- name: Get Install binary
+  shell: /usr/local/bin/gdown https://drive.google.com/ucn?id=1I1ObLWXqU_569VyM534ygKX_dtSiSPdu -O /tmp/SS_94M5.zip
+# shell: /usr/local/bin/gdown https://drive.google.com/uc?id=1yB-zBR55s_9eOfOVgfU6doXYk_YP_FAw -O /tmp/Stata16Linux64.tar.gz
+    
+
 - name: Run the installer in quiet mode
   # we use yes for accepting default values
   shell: "yes '' 2>/dev/null | {{ sas_install_home }}/setup.sh -console -quiet -nomsupdate -responsefile {{ sas_response_file_path }}"
