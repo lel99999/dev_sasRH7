@@ -38,6 +38,15 @@
   shell: /usr/local/bin/gdown https://drive.google.com/ucn?id=1I1ObLWXqU_569VyM534ygKX_dtSiSPdu -O /tmp/SS_94M5.zip
 # shell: /usr/local/bin/gdown https://drive.google.com/uc?id=1yB-zBR55s_9eOfOVgfU6doXYk_YP_FAw -O /tmp/Stata16Linux64.tar.gz
     
+- name: Unarchive the zip download 
+  unarchive:
+#   copy: yes     ### deprecated to remote_src
+    src: "/tmp/SS_94M5zip"
+    dest: "{{ sas_install_home }}/"
+    remote_src: yes
+  when: custom_repo
+  tags:
+    - sas
 
 - name: Run the installer in quiet mode
   # we use yes for accepting default values
