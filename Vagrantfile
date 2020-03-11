@@ -79,6 +79,7 @@ Vagrant.configure("2") do |config|
     # Default
     sasRH7.vm.provision "main", type: "ansible" do |ansible|
       ansible.playbook = "deploy_sasRH7_DEV.local.yml"
+#     ansible.playbook = "deploy_sasRH7_DEV.local.yml"
 #     ansible.playbook = "deploy_sasTestRH7.yml"
       ansible.inventory_path = "vagrant_hosts"
       #ansible.tags = ansible_tags
@@ -87,15 +88,15 @@ Vagrant.configure("2") do |config|
       #ansible.limit = ansible_limit
     end
     # Update
-    sasRH7.vm.provision "update", type: "ansible" do |ansible|
-      ansible.playbook = "deploy_sasPatchRH7_DEV.local.yml"
+#   sasRH7.vm.provision "update", type: "ansible" do |ansible|
+#     ansible.playbook = "deploy_sasPatchRH7_DEV.local.yml"
 #     ansible.playbook = "deploy_sasTestRH7.yml"
-      ansible.inventory_path = "vagrant_hosts"
-      #ansible.tags = ansible_tags
-      #ansible.verbose = ansible_verbosity
-      #ansible.extra_vars = ansible_extra_vars
-      #ansible.limit = ansible_limit
-    end
+#     ansible.inventory_path = "vagrant_hosts"
+#     #ansible.tags = ansible_tags
+#     #ansible.verbose = ansible_verbosity
+#     #ansible.extra_vars = ansible_extra_vars
+#     #ansible.limit = ansible_limit
+#   end
   end
 # config.trigger.before :destroy do |trigger|
 #   run "rm -Rf /tmp/abc/*"
