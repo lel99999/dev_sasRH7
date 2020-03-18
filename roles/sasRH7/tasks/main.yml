@@ -18,6 +18,18 @@
   tags:
     - sas
 
+- name: Install SAS dependencies for RHEL 7
+  yum:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - compat-glibc
+    - libpng12
+# notify:
+#   - restart sas-server
+  tags:
+    - sas
+
 - name: Copy the response file
   template:
     src: sas_template.txt.j2
