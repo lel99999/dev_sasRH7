@@ -1,4 +1,4 @@
-- hosts: sasRH7 
+- hosts: research_environment
   vars:
     custom_repo: true
     deploy_iptables: true
