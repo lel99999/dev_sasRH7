@@ -50,10 +50,16 @@
 
 - name: Install gdown for remote download
   shell: pip3 install gdown
+
+- name: Check if binary already there
+  stat:
+    path: /tmp/SASInstall.zip
+  register: saszip
   
 - name: Get Install binary
   shell: /usr/local/bin/gdown https://drive.google.com/uc?id=1I1ObLWXqU_569VyM534ygKX_dtSiSPdu -O /tmp/SASInstall.zip
 # shell: /usr/local/bin/gdown https://drive.google.com/uc?id=1yB-zBR55s_9eOfOVgfU6doXYk_YP_FAw -O /tmp/Stata16Linux64.tar.gz
+  when: saszip.stat.exists == false
     
 - name: Unarchive the zip download 
   unarchive:
@@ -61,7 +67,7 @@
     src: /tmp/SASInstall.zip"
     dest: "{{ sas_install_home }}/"
     remote_src: yes
-  when: custom_repo
+  when: custom_repo 
   tags:
     - sas
 
