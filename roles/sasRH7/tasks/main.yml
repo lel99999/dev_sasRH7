@@ -52,7 +52,7 @@
   shell: pip3 install gdown
   
 - name: Get Install binary
-  shell: /usr/local/bin/gdown https://drive.google.com/ucn?id=1I1ObLWXqU_569VyM534ygKX_dtSiSPdu -O /tmp/SASInstall.zip
+  shell: /usr/local/bin/gdown https://drive.google.com/uc?id=1I1ObLWXqU_569VyM534ygKX_dtSiSPdu -O /tmp/SASInstall.zip
 # shell: /usr/local/bin/gdown https://drive.google.com/uc?id=1yB-zBR55s_9eOfOVgfU6doXYk_YP_FAw -O /tmp/Stata16Linux64.tar.gz
     
 - name: Unarchive the zip download 
