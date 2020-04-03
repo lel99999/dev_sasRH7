@@ -36,8 +36,8 @@
 - name: Install postgres packages
   yum:
     name: "{{ item }}"
-#   state: present
-    state: latest
+    state: present
+#   state: latest
     disable_gpg_check: yes
   with_items: "{{ postgres_packages }}"
   tags:
@@ -54,6 +54,11 @@
   tags:
     - postgres_client
 
+- name: Check if include link exists
+  stat:
+    path: /usr/include/pgsql
+  register: lpgsqlinclude
+
 - name: Ensure other libraries can see header files
   file:
     src: "{{ postgres_install_dir }}/include/"
@@ -61,6 +66,12 @@
     state: link
   tags:
     - postgres_client
+  when: lpgsqlinclude.stat.exists == false
+
+- name: Check if lib link exists
+  stat:
+    path: /usr/include/pgsql
+  register: lpgsqllib
 
 - name: Ensure other libraries can see library files
   file:
@@ -69,6 +80,7 @@
     state: link
   tags:
     - postgres_client
+  when: lpgsqllib.stat.exists == false
 
 - name: Add psql bin directory to path
   template:
