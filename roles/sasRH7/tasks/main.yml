@@ -9,12 +9,17 @@
     - restart sas-server
   tags:
     - sas
+- name: Check if project directory exits
+  stat:
+    path: /opt/sas/SASInstall
+  register: saspath
 
 - name: Make sure project directory exists
   file:
     path: "{{ sas_install_home }}"
     state: directory
     mode: 0755
+  when: saspath.stat.exists == false
   tags:
     - sas
 
