@@ -58,7 +58,7 @@ require 'yaml'
 
 Vagrant.configure("2") do |config|
   config.vm.provider "virtualbox" do |v|
-    v.memory = "1024"
+    v.memory = "2048"
     v.cpus = 2
     v.customize ["modifyvm", :id, "--cpuexecutioncap", "70"]
 #   v.default_nic_type = "82543GC"
@@ -71,10 +71,10 @@ Vagrant.configure("2") do |config|
 # end
   config.vm.define "sasRH7" do |sasRH7|
     sasRH7.vm.box = "clouddood/RH7.5_baserepo"
-    sasRH7.vm.hostname = "stataRH7"
+    sasRH7.vm.hostname = "sasRH7"
     sasRH7.vm.network "private_network", ip: "192.168.60.157"
 #   sasRH7.vm.network "private_network", ip: "192.168.60.157", nic_type: "virtio"
-    sasRH7.vm.provision "shell", :inline => "sudo echo '192.168.60.157 stataRH7.local stataRH7' >> /etc/hosts"
+    sasRH7.vm.provision "shell", :inline => "sudo echo '192.168.60.157 stataRH7.local sasRH7' >> /etc/hosts"
 
 ##  Use Main / Update in Vagrant provision command ### $vagrant provision --provision-with shell/main/update
 
