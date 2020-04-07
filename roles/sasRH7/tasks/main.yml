@@ -68,7 +68,7 @@
   register: unzipsas
     
 - name: Unarchive the zip download 
-  shell: unzip /tmp/SASInstall.zip -c {{ sas_install_home }}
+  shell: unzip /tmp/SASInstall.zip -d {{ sas_install_home }}
 # unarchive:
 #   copy: yes     ### deprecated to remote_src
 #   src: /tmp/SASInstall.zip"
