@@ -1,5 +1,5 @@
 ---
-install_sas: false
+install_sas: true
 sas_version: 9.4
 sas_install_home: /opt/sas/SASInstall
 sas_response_file_path: /opt/sas/SASInstall/deploy_plan.txt
