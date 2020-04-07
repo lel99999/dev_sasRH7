@@ -68,11 +68,12 @@
   register: unzipsas
     
 - name: Unarchive the zip download 
-  unarchive:
+  shell: unzip /tmp/SASInstall.zip -c {{ sas_install_home }}
+# unarchive:
 #   copy: yes     ### deprecated to remote_src
-    src: /tmp/SASInstall.zip"
-    dest: "{{ sas_install_home }}/"
-    remote_src: yes
+#   src: /tmp/SASInstall.zip"
+#   dest: "{{ sas_install_home }}/"
+#   remote_src: true
   when: unzipsas.stat.exists == false 
   tags:
     - sas
