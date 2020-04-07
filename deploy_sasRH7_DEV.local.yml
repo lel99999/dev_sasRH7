@@ -15,7 +15,7 @@
     - name: register RHEL7.5
       command: "/usr/bin/subscription-manager register --username {{ _uid }} --password {{ _pwd }} --auto-attach --force"
       when: _uid != "" and _pwd != ""
-      command: "/usr/bin/subscription-manager register --username <name> --password <password> --auto-attach"
+#      command: "/usr/bin/subscription-manager register --username <name> --password <password> --auto-attach"
     - name: register RHEL7 repo
       command: "/usr/bin/subscription-manager repos --enable=rhel-7-server-rpms --enable=rhel-7-server-extras-rpms --enable=rhel-7-server-optional-rpms"
     - name: register RHEL7 RHSCL Repo
