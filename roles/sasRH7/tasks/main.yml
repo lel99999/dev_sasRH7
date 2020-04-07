@@ -61,6 +61,11 @@
 # shell: /usr/local/bin/gdown https://drive.google.com/uc?id=1I1ObLWXqU_569VyM534ygKX_dtSiSPdu -O /tmp/SASInstall.zip
 # shell: /usr/local/bin/gdown https://drive.google.com/uc?id=1yB-zBR55s_9eOfOVgfU6doXYk_YP_FAw -O /tmp/Stata16Linux64.tar.gz
   when: saszip.stat.exists == false
+
+- name: Check if already unarchived
+  stat:
+    path: /opt/sas/SASInstall/SAS_94M5
+  register: unzipsas
     
 - name: Unarchive the zip download 
   unarchive:
@@ -68,7 +73,7 @@
     src: /tmp/SASInstall.zip"
     dest: "{{ sas_install_home }}/"
     remote_src: yes
-  when: custom_repo 
+  when: unzipsas.stat.exists == false 
   tags:
     - sas
 
