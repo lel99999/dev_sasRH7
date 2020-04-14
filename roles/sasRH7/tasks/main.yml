@@ -175,6 +175,17 @@
   tags:
     - sas
 
+- name: Check stat of log folder 1
+  stat:
+    path: /opt/sas/studioconfig/appserver/studio
+  register: saslogdir1
+
+
+- name: Check stat of log folder 2 
+  stat:
+    path: /opt/sas/studioconfig/spawner/log
+  register: saslogdir2
+
 - name: Set recursive admin permissions on log folders
   acl:
     path: "{{ item }}"
@@ -184,6 +195,7 @@
     recursive: yes
     state: present
   with_items: "{{ sas_log_file_locations }}"
+  when: saslogdir1.stat.exists == true and saslogdir2.stat.exists == ture
   tags:
     - sas
 
