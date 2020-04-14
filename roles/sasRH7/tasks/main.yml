@@ -152,11 +152,17 @@
   tags:
     - sas
 
+- name: Check work directory config status
+  stat:
+    path: "{{ sas_home }}/SASFoundation/{{ sas_version }}/sasv9_local.cfg"
+  register: workdirconfig
+
 - name: Change the sas work directory
   lineinfile:
     dest: "{{ sas_home }}/SASFoundation/{{ sas_version }}/sasv9_local.cfg"
     regexp: "-WORK"
     line: "-WORK {{ sas_work_dir }}"
+  when:  workdirconfig.stat.exists == true
   tags:
     - sas
 
