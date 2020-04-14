@@ -89,6 +89,8 @@
     recurse: yes
 
 - name: Run the installer in quiet mode
+  become_user: vagrant
+  become_method: sudo
   # we use yes for accepting default values
   shell: "yes '' 2>/dev/null | {{ sas_install_home }}/SAS_94M5/setup.sh -console -quiet -nomsupdate -responsefile {{ sas_response_file_path }}"
   register: installer_cmd
@@ -180,10 +182,24 @@
     path: /opt/sas/studioconfig/appserver/studio
   register: saslogdir1
 
+- debug:
+    msg: saslogdir1 {{ saslogdir1 }}
+
 - name: Check stat of log folder 2 
   stat:
     path: /opt/sas/studioconfig/spawner/log
   register: saslogdir2
+
+- debug:
+    msg: saslogdir2 {{ saslogdir2 }}
+
+#- name: check for admin group
+#  command: if getent admin;then echo "true";else echo "false";fi
+#  command: if grep -q -E "^admin:" /etc/group;then echo "true";else echo "false";fi
+#  register: admingroupchk
+
+#- debug:
+#    msg: admingroupcheck {{ admingroupchk }}
 
 - name: Set recursive admin permissions on log folders
   acl:
