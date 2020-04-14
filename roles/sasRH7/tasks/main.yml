@@ -195,7 +195,7 @@
     recursive: yes
     state: present
   with_items: "{{ sas_log_file_locations }}"
-  when: saslogdir1.stat.exists == true and saslogdir2.stat.exists == ture
+  when: saslogdir1.stat.exists == true and saslogdir2.stat.exists == true
   tags:
     - sas
 
