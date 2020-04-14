@@ -180,7 +180,6 @@
     path: /opt/sas/studioconfig/appserver/studio
   register: saslogdir1
 
-
 - name: Check stat of log folder 2 
   stat:
     path: /opt/sas/studioconfig/spawner/log
