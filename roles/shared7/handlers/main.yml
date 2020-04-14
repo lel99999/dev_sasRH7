@@ -49,6 +49,7 @@
 # shell: "service httpd24-httpd restart"
 
 - name: restart sas-server
-  service:
-    name: sas-studio
-    state: restarted
+  command: echo "no restart"
+#  service:
+#    name: sas-studio
+#    state: restarted
