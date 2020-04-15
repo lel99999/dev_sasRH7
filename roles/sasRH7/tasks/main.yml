@@ -89,7 +89,7 @@
     recurse: yes
 
 - name: Run the installer in quiet mode
-  become_user: deploy
+  become: yes
   become_method: sudo
   # we use yes for accepting default values
   shell: "yes '' 2>/dev/null | {{ sas_install_home }}/SAS_94M5/setup.sh -console -quiet -nomsupdate -responsefile {{ sas_response_file_path }}"
