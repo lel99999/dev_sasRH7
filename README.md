@@ -8,3 +8,12 @@ for specific provisioning parts:
 ### Specific Notes for RHEL 7.x
 Require the following packages for depencies:<br/>
 `$sudo yum install compat-glibc libpng12`<br/> 
+
+### Resource Limit of Open file Descriptors below recommended value of 20480
+`$sudo vi /etc/sysctl.conf`<br/>
+Add the following line:<br/>
+`fs.file-max=500000`<br/>
+To apply the limit immediately:<br/>
+`$sudo sysctl -p`<br/>
+To check:
+`$sudo cat /proc/sys/fs/file-max`<br/>
