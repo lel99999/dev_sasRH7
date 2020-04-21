@@ -59,7 +59,6 @@
 - name: Get Install binary
   shell: /usr/local/bin/gdown https://drive.google.com/uc?id=1Ygspl5kF_mt57s8mvA_bWN_YpLvsEuQa -O /tmp/SASInstall.zip 
 # shell: /usr/local/bin/gdown https://drive.google.com/uc?id=1I1ObLWXqU_569VyM534ygKX_dtSiSPdu -O /tmp/SASInstall.zip
-# shell: /usr/local/bin/gdown https://drive.google.com/uc?id=1yB-zBR55s_9eOfOVgfU6doXYk_YP_FAw -O /tmp/Stata16Linux64.tar.gz
   when: saszip.stat.exists == false
 
 - name: Check if already unarchived
