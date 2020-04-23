@@ -21,3 +21,13 @@ To apply the limit immediately:<br/>
 `$sudo sysctl -p`<br/>
 To check:
 `$sudo cat /proc/sys/fs/file-max`<br/>
+
+### Modify Hard/Soft Limits on Number of Processes
+Check with `$sudo vi /etc/security/limits.conf`<br/>
+Change from:<br/>
+`*          soft    nproc     1024`<br/>
+`*          hard    nproc     1024`<br/>
+
+Change to:<br/>
+`*          soft    nproc     20480`<br/>
+`*          hard    nproc     20480`<br/>
