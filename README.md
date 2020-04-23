@@ -31,3 +31,7 @@ Change from:<br/>
 Change to:<br/>
 `*          soft    nproc     20480`<br/>
 `*          hard    nproc     20480`<br/>
+
+## SASStudio
+Login page:<br/>
+**http://hostname:port/SASStudio**
