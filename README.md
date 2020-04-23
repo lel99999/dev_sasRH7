@@ -10,6 +10,10 @@ Require the following packages for depencies:<br/>
 `$sudo yum install compat-glibc libpng12`<br/> 
 
 ### Resource Limit of Open file Descriptors below recommended value of 20480
+Check with `$ulimit -n`<br/>
+Set by     `$sudo ulimit -n 20480`<br/>
+
+To set permanently:<br/>
 `$sudo vi /etc/sysctl.conf`<br/>
 Add the following line:<br/>
 `fs.file-max=500000`<br/>
