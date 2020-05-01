@@ -30,7 +30,9 @@ Change from:<br/>
 
 Change to:<br/>
 `*          soft    nproc     20480`<br/>
+`*          soft    nofile    20480`<br/>
 `*          hard    nproc     20480`<br/>
+`*          hard    nofile    20480`<br/>
 
 ## SASStudio
 Login page:<br/>
