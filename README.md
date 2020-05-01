@@ -10,7 +10,7 @@ Require the following packages for depencies:<br/>
 `$sudo yum install compat-glibc libpng12`<br/> 
 
 ### Resource Limit of Open file Descriptors below recommended value of 20480
-Check with `$ulimit -n`<br/>
+Check the hard limit with `$ulimit -n`<br/>
 Set by     `$sudo ulimit -n 20480`<br/>
 
 To set permanently:<br/>
@@ -22,7 +22,7 @@ To apply the limit immediately:<br/>
 To check:
 `$sudo cat /proc/sys/fs/file-max`<br/>
 
-### Modify Hard/Soft Limits on Number of Processes
+### Modify Hard/Soft Limits on Number of Processes (nproc) and Open Files (nofile)
 Check with `$sudo vi /etc/security/limits.conf`<br/>
 Change from:<br/>
 `*          soft    nproc     1024`<br/>
@@ -33,6 +33,9 @@ Change to:<br/>
 `*          soft    nofile    20480`<br/>
 `*          hard    nproc     20480`<br/>
 `*          hard    nofile    20480`<br/>
+
+Edit the /etc/pam.d/lgoin by adding the line:
+`session required /lib/security/pom_lmits.so`<br/>
 
 ## SASStudio
 Login page:<br/>
