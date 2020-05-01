@@ -58,7 +58,7 @@
   
 - name: Get Install binary
   shell: /usr/local/bin/gdown https://drive.google.com/uc?id=1Ygspl5kF_mt57s8mvA_bWN_YpLvsEuQa -O /tmp/SASInstall.zip 
-# shell: /usr/local/bin/gdown https://drive.google.com/uc?id=1I1ObLWXqU_569VyM534ygKX_dtSiSPdu -O /tmp/SASInstall.zip
+# shell: /usr/local/bin/gdown https://drive.google.com/uc?id=<download-id> -O /tmp/SASInstall.zip
   when: saszip.stat.exists == false
 
 - name: Check if already unarchived
