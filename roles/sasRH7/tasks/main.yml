@@ -53,7 +53,7 @@
 
 - name: Check if binary already there
   stat:
-    path: /tmp/SASInstall.zip
+    path: /opt/sas/SASInstall.zip
   register: saszip
   
 - name: Get Install binary
@@ -87,10 +87,10 @@
     mode: 0755
     recurse: yes
 
-- name: change ownership of directory
-  become: yes
-  become_method: sudo
-  shell:  chown -R lel "{{ sas_install_home }}/SAS_SAS_94M5"
+#- name: change ownership of directory
+#  become: yes
+#  become_method: sudo
+#  shell:  chown -R lel "{{ sas_install_home }}/SAS_SAS_94M5"
 
 - name: Run the installer in quiet mode
 #  become: yes
