@@ -57,7 +57,7 @@
 #   - python2RH7
 #   - python3RH7
 #   - devtools7
-#    - sasRH7
+    - sasRH7
 #   - stattransfer14
 
   post_tasks:
