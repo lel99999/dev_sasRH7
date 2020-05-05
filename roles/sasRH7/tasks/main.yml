@@ -231,18 +231,18 @@
   tags:
     - sas
 
-#- name: check sasstudio.sh script exists
-#  stat:
-#    path: "{{ sas_config_home }}/sasstudio.sh"
-#  register: sasstudio_file
-#  tags:
-#    - sas
+- name: check sasstudio.sh script exists
+  stat:
+    path: "{{ sas_config_home }}/sasstudio.sh"
+  register: sasstudio_file
+  tags:
+    - sas
 
 - name: Enable sas service
   service:
     name: sas-studio
     state: started
     enabled: yes
-# when: sasstudio_file.stat.exists == True
+  when: sasstudio_file.stat.exists == True
   tags:
     - sas
