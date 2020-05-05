@@ -99,7 +99,7 @@
 
 - name: Run the installer in quiet mode
   become: yes
-# become_method: su
+  become_method: su
   become_user: lel
 # remote_user: lel
   # we use yes for accepting default values
