@@ -1,4 +1,4 @@
-- hosts: research_python7
+- hosts: research_environment
   vars:
     use_epel: true
     custom_repo: true
