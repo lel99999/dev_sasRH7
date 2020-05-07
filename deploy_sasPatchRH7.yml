@@ -54,11 +54,11 @@
 
   roles:
 #   - epel7
-    - python2RH7
-    - python3RH7
-    - pyenvRH7
-    - devtools7
-    - odbc7
+##   - python2RH7
+##  - python3RH7
+##  - pyenvRH7
+##  - devtools7
+##  - odbc7
     - postgresql-client7
     - r_RH7
 #   - sasRH7
