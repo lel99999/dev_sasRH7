@@ -1,0 +1,147 @@
+- hosts: research_environment
+  vars:
+    use_epel: true
+    custom_repo: true
+    deploy_iptables: true
+    envir: prod
+# vars_files:
+#   - ~/RHACCOUNT
+  become: yes
+  become_method: sudo
+
+  pre_tasks:
+    - name: register RHEL7 repo
+      command: "/usr/bin/subscription-manager repos --enable=rhel-7-server-rpms --enable=rhel-7-server-extras-rpms --enable=rhel-7-server-optional-rpms"
+    - name: register RHEL7 RHSCL Repo
+      shell: "/usr/bin/subscription-manager repos --enable=rhel-server-rhscl-7-rpms"
+    - name: register RHEL7 DevTools
+      shell: "/usr/bin/subscription-manager repos --enable=rhel-7-server-devtools-rpms"
+    - name: list RHEL enabled repos
+      shell: "/usr/bin/subscription-manager repos --list-enabled"
+      register: enabled_repos
+    - debug:
+        msg: "RHEL Enabled Repos: {{ enabled_repos }}"
+  tasks:
+    - name: Install RStudio Server Web Interface (Suspend Active Sessions)
+      shell: rstudio-server suspend-all
+
+    - name: Install RStudio Server Web Interface (Put old server in offline mode)
+      shell: rstudio-server offline
+
+    - name: Install RStudio Server Web Interface (Download v1.2.5403)
+      get_url:
+        url:  https://download2.rstudio.org/server/centos6/x86_64/rstudio-server-rhel-1.2.5042-x86_64.rpm
+        dest: /tmp/rstudio-server-rhel-1.2.5042-x86_64.rpm
+        mode: '0755'
+
+    - name: Install RStudio Server Web Interface (Run Local Install)
+      shell:  yum -y localinstall /tmp/rstudio-server-rhel-1.2.5042-x86_64.rpm --nogpgcheck
+
+    - name: Install RStudio Server Web Interface (Restart Server)
+      shell: rstudio-server restart
+
+    - name: Install RStudio Server Web Interface (Bring RStudio Server Online)
+      shell: rstudio-server online
+
+    - name: Install jupyter notebook
+      shell:  pip3 install jupyter
+
+    - name: Install python 2.7 virtualenv
+      yum:
+        name: python-virtualenv
+        state:  present
+ 
+    - name: Fix legacy Python 2.7.x virtualenv issue
+      yum:
+        name:  python-virtualenv
+      state: present
+
+    - name: Fix xcb error
+      yum:
+        name: 
+          - libxkbcommon-x11
+      state: present
+
+    - name: Install gdal dependencies
+      yum:
+        name: "{{ item }}"
+        state: present
+      with_items:
+#       - libgdal*dev*
+        - gdal-devel
+        - gdal-libs
+        - proj
+        - proj-devel
+        - proj-nad
+        - proj-epsg
+
+    - name: Install RGDAL Additional Packages
+      command: /usr/bin/Rscript --slave --no-save --no-restore-history -e "if (! ('{{ item }}' %in% installed.packages()[,'Package'])) { install.packages(pkgs='{{ item }}', INSTALL_opts=c('--no-test-load'),repos=c('http://R-forge.R-project.org/'),dep=TRUE); print('Added'); } else { print('Already installed'); }"
+      with_items:
+        - rgdal
+
+    - name: Install RGDAL Dependency Packages
+      command: /usr/bin/Rscript --slave --no-save --no-restore-history -e "if (! ('{{ item }}' %in% installed.packages()[,'Package'])) { install.packages(pkgs='{{ item }}', INSTALL_opts=c('--with-gdal-config,"/usr/local/bin/gdal-config"'),repos=c('http://http://cran.rstudio.com'),dep=TRUE); print('Added'); } else { print('Already installed'); }"
+      with_items:
+        - PROJ
+        - sf
+
+    - name: Install R Patch packages
+#     vars:
+#       do_r_install_packages: False
+      command: /usr/bin/Rscript --slave --no-save --no-restore-history -e "if (! ('{{ item }}' %in% installed.packages()[,'Package'])) { install.packages(pkgs='{{ item }}', INSTALL_opts=c('--no-test-load'),repos=c('http://cran.rstudio.com/'),dep=TRUE); print('Added'); } else { print('Already installed'); }"
+      with_items:
+        - sf
+        - tidyverse
+        - maps
+        - units
+        - devtools
+      register: r_add_result
+#     failed_when: "r_result.rc != 0 or 'had non-zero exit status' in r_result.stderr"
+#     changed_when: "'Added' in r_result.stdout"
+      environment: "{{ r_env_vars }}"
+      tags:
+        - r
+#     when: install_r_packages and do_r_install_packages
+
+    - name: Install PostGIS on Posgresql
+      yum:
+        name: "{{ item }}"
+        state: present
+      with_items:
+        - geos-devel
+        - proj-devel
+        - gdal-devel
+        - libxml2-devel
+        - json-c-devel
+
+  roles:
+#   - epel7
+#   - emacsRH7
+#   - openjdk1.8
+#   - odbc7
+    - postgresql-client7
+#   - devtools7
+#   - python2RH7
+#   - python3RH7
+#   - pyenvRH7
+#   - pycharm7
+#   - gocd7
+#   - stattransfer14
+#   - r_RH7
+#   - r-studio-desktopRH7
+#   - r-studio-serverRH7
+#   - r-studio-server-configRH7
+#   - r-shinyRH7
+#   - r-shiny-configRH7
+
+  post_tasks:
+#   - name: register mime types
+#     shell: update-mime-database /usr/share/mime/packages/
+
+#   - name: remove RHEL7.5
+#     command:  "/usr/bin/subscription-manager remove --all"
+#   - name: unregister RHEL7.5
+#     command:  "/usr/bin/subscription-manager unregister"
+#   - name: clean RHEL7.5
+#     command:  "/usr/bin/subscription-manager clean"7
