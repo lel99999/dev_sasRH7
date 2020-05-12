@@ -117,7 +117,7 @@
 
   roles:
 #   - epel7
-#   - emacsRH7
+    - emacsRH7
 #   - openjdk1.8
 #   - odbc7
     - postgresql-client7

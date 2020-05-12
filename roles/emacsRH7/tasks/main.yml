@@ -1,0 +1,30 @@
+---
+- name: Install emacs for RH7
+  yum:
+    name: "{{ item }}"
+    state: present
+    disable_gpg_check: yes
+  with_items:
+    - emacs
+    - libotf
+
+- name: install gdown
+  shell: pip3 install gdown
+
+- name: use gdown to download emacs-common-ess-17.11-2.fc30.noarch.rpm
+  shell: gdown  https://drive.google.com/uc?id=1K5DTicyzmta4GNyfQF6icv7dXzmDBYNG -O /tmp/emacs-common-ess-17.11-2.fc30.noarch.rpm
+
+- name: use gdown to download emacs-ess-17.11-2.fc30.noarch.rpm 
+  shell: gdown  https://drive.google.com/open?id=1KkSVsZHo1IlmHR9bLG0H0XtlOIpiBxUI -O /tmp/emacs-ess-17.11-2.fc30.noarch.rpm
+
+- name: Install Emacs Speaks Statisitcs RH7
+  shell: yum localinstall -y /tmp/emacs*fc30* --nogpgcheck
+
+# yum:
+#   name: "{{ item }}"
+#   state: present
+#   disable_gpg_check: yes
+# with_items:
+#   - emacs-common-ess.noarch
+#   - emacs-ess.noarch
+# when: custom_repo
