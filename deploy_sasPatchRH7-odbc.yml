@@ -1,0 +1,140 @@
+- hosts: research_environment
+  vars:
+    use_epel: true
+    custom_repo: true
+    deploy_iptables: true
+    envir: prod
+# vars_files:
+#   - ~/RHACCOUNT
+  become: yes
+  become_method: sudo
+
+  pre_tasks:
+    - name: register RHEL7 repo
+      command: "/usr/bin/subscription-manager repos --enable=rhel-7-server-rpms --enable=rhel-7-server-extras-rpms --enable=rhel-7-server-optional-rpms"
+    - name: register RHEL7 RHSCL Repo
+      shell: "/usr/bin/subscription-manager repos --enable=rhel-server-rhscl-7-rpms"
+    - name: register RHEL7 DevTools
+      shell: "/usr/bin/subscription-manager repos --enable=rhel-7-server-devtools-rpms"
+    - name: list RHEL enabled repos
+      shell: "/usr/bin/subscription-manager repos --list-enabled"
+      register: enabled_repos
+    - debug:
+        msg: "RHEL Enabled Repos: {{ enabled_repos }}"
+  tasks:
+    - name: Install X Windows
+      yum:
+        name: "@X Window System"
+        state: present
+
+#   - name: Install python gdal bindings - Pip install gdal 2.2.3
+#     become: yes
+#     become_method: sudo
+#     shell: pip3 install gdal==2.2.3
+#     when: gdal.stat.exists == false
+
+#   - name: create necessary links with ldconfig
+#     become: yes
+#     become_method: sudo
+#     shell: ldconfig
+#     when: gdal.stat.exists == false
+
+#   - name: Install gdal additional dependencies
+#     yum:
+#       name: "{{ item }}"
+#       state: present
+#     with_items:
+#       - curl
+#       - libcurl
+#       - libcurl-devel
+#       - postgresql-devel
+
+#   - name: Install R Patch packages
+#     vars:
+#       do_r_install_packages: False
+#     command: /usr/bin/Rscript --slave --no-save --no-restore-history -e "if (! ('{{ item }}' %in% installed.packages()[,'Package'])) { install.packages(pkgs='{{ item }}', INSTALL_opts=c('--no-test-load'),repos=c('http://cran.rstudio.com/'),dep=TRUE); print('Added'); } else { print('Already installed'); }"
+#     with_items:
+#       - sf
+#       - units
+#       - devtools
+#     register: r_add_result
+#     failed_when: "r_result.rc != 0 or 'had non-zero exit status' in r_result.stderr"
+#     changed_when: "'Added' in r_result.stdout"
+#     environment: "{{ r_env_vars }}"
+#     tags:
+#       - r
+#     when: install_r_packages and do_r_install_packages
+
+    - name: Install htop
+      yum:
+        name: htop
+        state: present
+
+#   - name: Install OpenStreetMap
+#     shell:  R CMD install.pakcages("OpenStreetMap")
+#     command: /usr/bin/Rscript --slave --no-save --no-restore-history -e "if (! ('{{ item }}' %in% installed.packages()[,'Package'])) { install.packages(pkgs='{{ item }}', INSTALL_opts=c('--no-test-load'),repos=c('http://cran.rstudio.com/'),dep=TRUE); print('Added'); } else { print('Already installed'); }"
+#     with_items:
+#       - OpenStreetMap
+#       - sf
+#       - units
+#       - devtools
+#     register: r_add_resultOSP
+#     failed_when: "r_result.rc != 0 or 'had non-zero exit status' in r_result.stderr"
+#     changed_when: "'Added' in r_result.stdout"
+#     environment: "{{ r_env_vars }}"
+#     tags:
+#       - r
+
+  roles:
+#   - epel7
+#   - emacsRH7
+#   - openjdk1.8
+#   - odbc7
+    - postgresql-client7
+#   - devtools7
+#   - python2RH7
+#   - python3RH7
+#   - pyenvRH7
+#   - pycharm7
+#   - gocd7
+#   - stattransfer14
+#   - r_RH7
+#   - r-studio-desktopRH7
+#   - r-studio-serverRH7
+#   - r-studio-server-configRH7
+#   - r-shinyRH7
+#   - r-shiny-configRH7
+
+# hosts: research_python
+# become: yes
+# become_method: sudo
+# roles:
+#   - devtools
+#   - devtools6
+#   - {role: python, when: "custom_repo"}
+#   - {role: python-build, when: "not custom_repo"}
+#   - {role: python3, when: "custom_repo"}
+#   - {role: python3-build, when: "not custom_repo"}
+#   - {role: python-libs}
+#   - postgresql-client
+#   - r-core
+#   - r-libs
+#   - r-studio-desktop
+#   - r-studio-server
+#   - r-studio-server-config
+#   - pycharm
+#   - gocd
+#   - stattransfer14
+
+
+
+  post_tasks:
+#   - name: register mime types
+#     shell: update-mime-database /usr/share/mime/packages/
+
+#   - name: remove RHEL7.5
+#     command:  "/usr/bin/subscription-manager remove --all"
+#   - name: unregister RHEL7.5
+#     command:  "/usr/bin/subscription-manager unregister"
+#   - name: clean RHEL7.5
+#     command:  "/usr/bin/subscription-manager clean"7

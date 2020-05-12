@@ -5,6 +5,12 @@
     state: latest
     disable_gpg_check: yes
 
+- name: Install postgres repository for 9.4
+  yum:
+    name: "(( postgresq94_repository_url }}"
+    state: present
+    disable_gpg_check: yes
+
 - name: Install postgres repository
   yum:
     name: "{{ postgres_repository_url }}"
