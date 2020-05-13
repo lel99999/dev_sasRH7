@@ -53,6 +53,12 @@
   tags:
     - postgres_client
 
+- name: Add 94 yum repo
+  yum_repository:
+    name: postgres94
+    description: postgresql 94 repo for RHEL 7
+    baseurl: https://download.postgresql.org/pub/repos/yum/9.4/redhat/rhel-7-x86_64/
+
 - name: Install postgres packages
   yum:
     name: "{{ item }}"
