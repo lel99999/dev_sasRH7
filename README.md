@@ -48,7 +48,9 @@ Login page:<br/>
 <br/>
 
 ### SQL Specifics for ODBC
-`libname testodbc odbc noprompt="driver=/usr/pgsql/lib/sas_pgsqlodbc.so;server=<hostname>;uid=<uid>;pwd=<pwd>;database=<dbname>;sslmode=require;";<br/>
- proc datasets lib=testodbc;<br/>
- quit;`<br/>
+```
+libname testodbc odbc noprompt="driver=/usr/pgsql/lib/sas_pgsqlodbc.so;server=<hostname>;uid=<uid>;pwd=<pwd>;database=<dbname>;sslmode=require;";
+proc datasets lib=testodbc;
+quit;
+```
   
