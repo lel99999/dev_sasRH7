@@ -53,4 +53,6 @@ libname testodbc odbc noprompt="driver=/usr/pgsql/lib/sas_pgsqlodbc.so;server=<h
 proc datasets lib=testodbc;
 quit;
 ```
-  
+<br/>
+### SAS/ACCESS® 9.4 for Relational Databases: Reference, Ninth Edition
+[SQL Server Example](https://documentation.sas.com/?docsetId=acreldb&docsetTarget=p1f29m86u65hken1deqcybowtgma.htm&docsetVersion=9.4&locale=en)
