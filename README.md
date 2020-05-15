@@ -42,6 +42,6 @@ Login page:<br/>
 **http://hostname:port/SASStudio**
 
 ### SSL Issues: Errors when trying to enable SSL while using SAS/ACCESS Interface
-[Samples & SAS Notes](https://support.sas.com/kb/54/175.html)
-<br><br>
+[SAS SSL errors using SAS/ACCESS Interface Link](https://support.sas.com/kb/54/175.html)
+<br/>
 [Download PostgreSQL Drivers for SSL](http://ftp.sas.com/techsup/download/hotfix/psqlodbc.html)
