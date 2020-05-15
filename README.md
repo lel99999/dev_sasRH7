@@ -43,3 +43,5 @@ Login page:<br/>
 
 ### SSL Issues: Errors when trying to enable SSL while using SAS/ACCESS Interface
 [Samples & SAS Notes](https://support.sas.com/kb/54/175.html)
+<br><br>
+[Download PostgreSQL Drivers for SSL](http://ftp.sas.com/techsup/download/hotfix/psqlodbc.html)
