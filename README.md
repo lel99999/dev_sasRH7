@@ -45,3 +45,10 @@ Login page:<br/>
 [SAS SSL errors using SAS/ACCESS Interface Link](https://support.sas.com/kb/54/175.html)
 <br/>
 [Download PostgreSQL Drivers for SSL](http://ftp.sas.com/techsup/download/hotfix/psqlodbc.html)
+<br/>
+
+### SQL Specifics for ODBC
+`libname testodbc odbc noprompt="driver=/usr/pgsql/lib/sas_pgsqlodbc.so;server=<hostname>;uid=<uid>;pwd=<pwd>;database=<dbname>;sslmode=require;";<br/>
+ proc datasets lib=testodbc;<br/>
+ quit;`<br/>
+  
