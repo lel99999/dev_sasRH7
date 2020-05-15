@@ -40,3 +40,6 @@ Edit the /etc/pam.d/lgoin by adding the line:
 ## SASStudio
 Login page:<br/>
 **http://hostname:port/SASStudio**
+
+### SSL Issues: Errors when trying to enable SSL while using SAS/ACCESS Interface
+[Samples & SAS Notes](https://support.sas.com/kb/54/175.html)
