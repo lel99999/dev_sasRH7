@@ -53,7 +53,8 @@ libname testodbc odbc noprompt="driver=/usr/pgsql/lib/sas_pgsqlodbc.so;server=<h
 proc datasets lib=testodbc;
 quit;
 ```
-<br/>
+
+### ODBC DSN for PostgreSQL
 ```
 proc sql;
 connect to odbc(noprompt="dsn=<dsn_name>;uid=<uid>;pwd=<pwd>;");
