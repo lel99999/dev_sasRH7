@@ -48,7 +48,18 @@ Login page:<br/>
 <br/>
 
 ### SQL Specifics for ODBC
-`libname testodbc odbc noprompt="driver=/usr/pgsql/lib/sas_pgsqlodbc.so;server=<hostname>;uid=<uid>;pwd=<pwd>;database=<dbname>;sslmode=require;";<br/>
- proc datasets lib=testodbc;<br/>
- quit;`<br/>
-  
+```
+libname testodbc odbc noprompt="driver=/usr/pgsql/lib/sas_pgsqlodbc.so;server=<hostname>;uid=<uid>;pwd=<pwd>;database=<dbname>;sslmode=require;";
+proc datasets lib=testodbc;
+quit;
+```
+
+### ODBC DSN for PostgreSQL
+```
+proc sql;
+connect to odbc(noprompt="dsn=<dsn_name>;uid=<uid>;pwd=<pwd>;");
+  select * from connection to odbc(select xyz from table);
+```
+<br/>
+### SAS/ACCESS® 9.4 for Relational Databases: Reference, Ninth Edition
+[SQL Server Example](https://documentation.sas.com/?docsetId=acreldb&docsetTarget=p1f29m86u65hken1deqcybowtgma.htm&docsetVersion=9.4&locale=en)
