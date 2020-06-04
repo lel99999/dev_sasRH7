@@ -63,3 +63,6 @@ connect to odbc(noprompt="dsn=<dsn_name>;uid=<uid>;pwd=<pwd>;");
 <br/>
 ### SAS/ACCESS® 9.4 for Relational Databases: Reference, Ninth Edition
 [SQL Server Example](https://documentation.sas.com/?docsetId=acreldb&docsetTarget=p1f29m86u65hken1deqcybowtgma.htm&docsetVersion=9.4&locale=en)
+
+### SAS Studio Configuration Notes
+`$/<path>/studioconfig/sasstudio.sh (start | stop | restart)`<br/>
