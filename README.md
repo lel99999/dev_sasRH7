@@ -61,6 +61,13 @@ connect to odbc(noprompt="dsn=<dsn_name>;uid=<uid>;pwd=<pwd>;");
   select * from connection to odbc(select xyz from table);
 ```
 <br/>
+### SAS Prompoted Connection
+```
+libname sql odbc prompt;
+%put %superq(sysdbmsg);
+```
+<br/>
+
 ### SAS/ACCESS® 9.4 for Relational Databases: Reference, Ninth Edition
 [SQL Server Example](https://documentation.sas.com/?docsetId=acreldb&docsetTarget=p1f29m86u65hken1deqcybowtgma.htm&docsetVersion=9.4&locale=en)
 
