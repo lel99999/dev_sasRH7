@@ -77,4 +77,14 @@ libname sql odbc prompt;
 Set SASHome/SASStudioBasic/<version>/war/config/config.properties<br/>
 `webdms.studioDataParentDirectory=<path>/<userid>`<br/>
 
+Add Shortcuts folder:<br/>
+`!SASROOT/GlobalStudioSettings`<br/>
+Create shortcuts.xml file:<br/>
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<Shortcuts>
+<Shortcut type="disk" name="Network Location" dir="&lt;userdir&gt;"/>
+</Shortcuts>
+```
+
 
