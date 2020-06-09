@@ -67,9 +67,14 @@ libname sql odbc prompt;
 %put %superq(sysdbmsg);
 ```
 <br/>
-
 ### SAS/ACCESS® 9.4 for Relational Databases: Reference, Ninth Edition
 [SQL Server Example](https://documentation.sas.com/?docsetId=acreldb&docsetTarget=p1f29m86u65hken1deqcybowtgma.htm&docsetVersion=9.4&locale=en)
 
 ### SAS Studio Configuration Notes
 `$/<path>/studioconfig/sasstudio.sh (start | stop | restart)`<br/>
+
+#### SAS Studio 3.7.x Configuration Settings
+Set SASHome/SASStudioBasic/<version>/war/config/config.properties<br/>
+`webdms.studioDataParentDirectory=<path>/<userid>`<br/>
+
+
