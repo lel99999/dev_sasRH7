@@ -86,5 +86,9 @@ Create shortcuts.xml file:<br/>
 <Shortcut type="disk" name="Network Location" dir="&lt;userdir&gt;"/>
 </Shortcuts>
 ```
+<br/>
+### SAS Studio ODBC Error Fix
+Add following line in !SASROOT/bin/sasenv_local<br/>
+`export EASYSOFT_UNICODE=YES`<br/>
 
 
