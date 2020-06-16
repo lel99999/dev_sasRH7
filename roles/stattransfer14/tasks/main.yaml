@@ -22,20 +22,20 @@
 #  shell: chmod +x {{stattransfer_local_bin_directory}}/stlinux64_install
 
 - name: Copy over the install bin
- copy:
-   src: "{{stattransfer_local_bin_directory}}/stlinux64_install"
-   dest: "{{stattransfer_install_directory}}/stlinux64_install"
- when: custom_repo
- tags:
-   - stattransfer
+  copy:
+    src: "{{stattransfer_local_bin_directory}}/stlinux64_install"
+    dest: "{{stattransfer_install_directory}}/stlinux64_install"
+  when: custom_repo
+  tags:
+    - stattransfer
 
 - name: Set the install bin to be executable
- file:
-   path: "{{stattransfer_install_directory}}/stlinux64_install"
-   mode: a+x
- when: custom_repo
- tags:
-   - stattransfer
+  file:
+    path: "{{stattransfer_install_directory}}/stlinux64_install"
+    mode: a+x
+  when: custom_repo
+  tags:
+    - stattransfer
 
 - name: Run install bin
   shell: "{{ stattransfer_install_directory }}/stlinux64_install --mode silent"
