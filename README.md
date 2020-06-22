@@ -91,4 +91,6 @@ Create shortcuts.xml file:<br/>
 Add following line in !SASROOT/bin/sasenv_local<br/>
 `export EASYSOFT_UNICODE=YES`<br/>
 
+### Add Trace file
+`options sastrace='d,,d,d' sastraceloc=FILE '/tmp/odbc_trace.log' nostsuffix;`<br/>
 
