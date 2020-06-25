@@ -94,3 +94,5 @@ Add following line in !SASROOT/bin/sasenv_local<br/>
 ### Add Trace file
 `options sastrace='d,,d,d' sastraceloc=FILE '/tmp/odbc_trace.log' nostsuffix;`<br/>
 
+### Ensure work points to sastmp
+`$SASFoundation/version/sasv9.cfg`<br/>
