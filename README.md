@@ -96,3 +96,7 @@ Add following line in !SASROOT/bin/sasenv_local<br/>
 
 ### Ensure work points to sastmp
 `$SASFoundation/version/sasv9.cfg`<br/>
+
+### SQL Server Testing
+`$tsql -S <servername> -U <username> -P <password>`<br/>
+
