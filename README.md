@@ -100,3 +100,4 @@ Add following line in !SASROOT/bin/sasenv_local<br/>
 ### SQL Server Testing
 `$tsql -S <servername> -U <domain>\<username> -P <password>`<br/>
 
+`$isql -v <dsn> <uid> <pwd>`<br/>
