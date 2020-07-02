@@ -101,3 +101,10 @@ Add following line in !SASROOT/bin/sasenv_local<br/>
 `$tsql -S <servername> -U <domain>\<username> -P <password>`<br/>
 
 `$isql -v <dsn> <uid> <pwd>`<br/>
+
+#### Using ODBC with FreeTDS
+`$ODBCINI`<br/>
+`$ODBCINST`<br/>
+`$ODBCSYSINI/odbc.ini`<br/>
+`$ODBCSYSINI/odbcinst.ini`<br/>
+
