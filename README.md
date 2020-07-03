@@ -108,3 +108,4 @@ Add following line in !SASROOT/bin/sasenv_local<br/>
 `$ODBCSYSINI/odbc.ini`<br/>
 `$ODBCSYSINI/odbcinst.ini`<br/>
 
+Set in !SASRoot/bin/sasenv_local<br/>
