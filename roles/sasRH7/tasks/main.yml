@@ -179,6 +179,14 @@
   tags:
     - sas
 
+- name: Add Unicode fix for Postgres ODBC
+  lineinfile:
+    path: "{{ sas_home }}/SASFoundation/{{ sas_version }}/sasv9_local.cfg"
+    line: "export EASYSOFT_UNICODE=YES"
+# when:  workdirconfig.stat.exists == true
+  tags:
+    - sas
+
 - name: Ensure log directory exists
   file:
     path: "{{ item }}"
