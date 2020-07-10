@@ -110,7 +110,7 @@ Add following line in !SASROOT/bin/sasenv_local<br/>
 
 #### Test in SAS/SAS Studio
 >libname test odbc <dsn> <uid> <pwd>;<br/>
->datasets lib=test;<br/>
+>proc datasets lib=test;<br/>
 >quit;<br/>
 
 Set in !SASRoot/bin/sasenv_local<br/>
