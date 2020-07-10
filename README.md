@@ -109,6 +109,7 @@ Add following line in !SASROOT/bin/sasenv_local<br/>
 `$ODBCSYSINI/odbcinst.ini`<br/>
 
 #### Test in SAS/SAS Studio
+>options sastrace='d,,d,d' sastraceloc=FILE '<filepath>' nostsuffix;<br/>
 >libname test odbc <dsn> <uid> <pwd>;<br/>
 >proc datasets lib=test;<br/>
 >quit;<br/>
