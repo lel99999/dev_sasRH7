@@ -119,6 +119,7 @@ Set $ODBCSYSINI = /etc<br/>
 
 #### Setting and Testing Autoexec.sas file
 Login to SAS Studio, on top right corner click on more applications options button </br>
+![Menu](https://github.com/lel99999/dev_sasRH7/blob/master/sas_studio_menu-01.PNG) <br/>
 
 Click on Edit Autoexec File <br/>Copy and Paste the following, to print to the Log <br/>
 
@@ -133,6 +134,7 @@ Click on Edit Autoexec File <br/>Copy and Paste the following, to print to the L
 %put ************************************************************************************;
 ```
 Click Run button and view the Log tab <br/>
+![Edit Autoexec.sas](https://github.com/lel99999/dev_sasRH7/blob/master/sas_autoexec_edit-01.PNG) <br/>
 
 Click Save to Save to Home folder <br/>Log into SAS Interactive to verify log output <br/>
 
