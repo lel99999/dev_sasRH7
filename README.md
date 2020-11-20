@@ -118,5 +118,21 @@ Set in !SASRoot/bin/sasenv_local<br/>
 Set $ODBCSYSINI = /etc<br/>
 
 #### Setting and Testing Autoexec.sas file
+Login to SAS Studio, on top right corner click on more applications options button </br>
 
+Click on Edit Autoexec File <br/>Copy and Paste the following, to print to the Log <br/>
+
+```
+/* print welcome in the log */
+%put ************************************************************************************;
+%put *                                                                                  *;
+%put *                                                                                  *;
+%put       Welcome back &SYSUSERID.! Its &SYSTIME. and time to get SASsy. Have Fun!      ;
+%put *                                                                                  *;
+%put *                                                                                  *;
+%put ************************************************************************************;
+```
+Click Run button and view the Log tab <br/>
+
+Click Save to Save to Home folder <br/>Log into SAS Interactive to verify log output <br/>
 
