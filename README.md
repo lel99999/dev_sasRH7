@@ -61,7 +61,7 @@ connect to odbc(noprompt="dsn=<dsn_name>;uid=<uid>;pwd=<pwd>;");
   select * from connection to odbc(select xyz from table);
 ```
 <br/>
-### SAS Prompoted Connection
+### SAS Prompted Connection
 ```
 libname sql odbc prompt;
 %put %superq(sysdbmsg);
@@ -98,7 +98,7 @@ Add following line in !SASROOT/bin/sasenv_local<br/>
 `$SASFoundation/version/sasv9.cfg`<br/>
 
 ### SQL Server Testing
-`$tsql -S <servername> -U <domain>\<username> -P <password>`<br/>
+`$tsql -S <servername> -U '<domain>\<username>' -P <password>`<br/>
 
 `$isql -v <dsn> <uid> <pwd>`<br/>
 
@@ -107,6 +107,12 @@ Add following line in !SASROOT/bin/sasenv_local<br/>
 `$ODBCINST`<br/>
 `$ODBCSYSINI/odbc.ini`<br/>
 `$ODBCSYSINI/odbcinst.ini`<br/>
+
+#### Test in SAS/SAS Studio
+>options sastrace='d,,d,d' sastraceloc=FILE '<filepath>' nostsuffix;<br/>
+>libname test odbc <dsn> <uid> <pwd>;<br/>
+>proc datasets lib=test;<br/>
+>quit;<br/>
 
 Set in !SASRoot/bin/sasenv_local<br/>
 Set $ODBCSYSINI = /etc<br/>
