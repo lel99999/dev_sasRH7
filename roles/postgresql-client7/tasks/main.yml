@@ -36,6 +36,18 @@
     - postgresql96-docs
     - postgresql96-contrib
 
+- name: Install postgres 9.6 packages on RHEL 7
+  yum:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - postgresql10
+    - postgresql10-libs
+    - postgresql10-odbc
+    - postgresql10-devel
+    - postgresql10-docs
+    - postgresql10-contrib
+
 - name: Install postgres repository
   yum:
     name: "{{ postgres_repository_url }}"
