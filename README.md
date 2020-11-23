@@ -117,6 +117,32 @@ Add following line in !SASROOT/bin/sasenv_local<br/>
 Set in !SASRoot/bin/sasenv_local<br/>
 Set $ODBCSYSINI = /etc<br/>
 
+#### Service Startup Script
+```
+$sudo vi /etc/systemd/system/sasstudio.service
+
+# Add the following ----------------------------
+
+[Unit]
+Description=SAS Studio startup script
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/<sas>/studioconfig/sasstudio.sh
+TimeoutStartSec=0
+
+[Install]
+WantedBy=default.target
+
+# ----------------------------------------------
+
+$sudo systemctl enable sasstudio.service
+```
+
+
+
+
 #### Setting and Testing Autoexec.sas file
 Login to SAS Studio, on top right corner click on more applications options button </br>
 ![Menu](https://github.com/lel99999/dev_sasRH7/blob/master/sas_studio_menu-01.PNG) <br/>
@@ -137,4 +163,5 @@ Click Run button and view the Log tab <br/>
 ![Edit Autoexec.sas](https://github.com/lel99999/dev_sasRH7/blob/master/sas_autoexec_edit-01.PNG) <br/>
 
 Click Save to Save to Home folder <br/>Log into SAS Interactive to verify log output <br/>
+
 
