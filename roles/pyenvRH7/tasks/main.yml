@@ -31,6 +31,11 @@
     path: /root/.pyenv
   register: pyenv_installed
 
+- name: Install Git as a prerequisite for Pyenv
+  yum:
+    name: git
+    state: present
+
 - name: Install PyEnv
   shell: /tmp/pyenv-installer.sh
   when: pyenv_installed.stat.exists == False
