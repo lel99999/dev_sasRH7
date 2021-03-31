@@ -2,7 +2,8 @@
   vars:
     custom_repo: true
     deploy_iptables: true
-    envir: DEV.local
+    envir: PROD
+#   envir: DEV.local
 # vars_files:
 #    - ~/RHACCOUNT
   become: yes
@@ -54,6 +55,7 @@
 
   roles:
     - epel7
+    - python27RH7-System
     - python2RH7
     - python3RH7
     - devtools7
