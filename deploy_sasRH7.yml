@@ -35,9 +35,9 @@
         name: "@Development Tools"
         state: present
 #     shell:  yum groupinstall "Development Tools" -y
-    - name: Install X Windows
+    - name: Install X Windows (Server with GUI)
       yum:
-        name: "@X Window System"
+        name: "@Server with GUI"
         state: present 
     - name: Install wget
       yum:
