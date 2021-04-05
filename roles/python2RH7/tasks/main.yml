@@ -23,11 +23,13 @@
 #  pip:
 #    name: virtualenvwrapper
 #    state: present
-- name: SCL Enable Pip Install Upgrade Pip 
-  shell: |
-    scl enable python27 -- pip install --upgrade pip
-  become: yes
-  become_method: sudo
+    
+#################### Python 2.7 Issues ####################
+#- name: SCL Enable Pip Install Upgrade Pip 
+#  shell: |
+#    scl enable python27 -- pip install --upgrade pip
+#  become: yes
+#  become_method: sudo
 
 # Already Installed with RHEL 7
 #- name: SCL Enable Pip Install virtualenvwrapper
