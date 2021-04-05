@@ -36,11 +36,13 @@
 #  become: yes
 #  become_method: sudo
 
-- name: SCL Enable Pip Install numpy, scipy
-  shell: |
-    scl enable python27 -- pip install numpy scipy 
-  become: yes
-  become_method: sudo
+#################### Python 2.7 Issues ####################
+#
+#- name: SCL Enable Pip Install numpy, scipy
+#  shell: |
+#    scl enable python27 -- pip install numpy scipy 
+#  become: yes
+#  become_method: sudo
 
 #- name: Install pip
 #  easy_install:
