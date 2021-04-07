@@ -1,4 +1,5 @@
-- hosts: research_environment
+- hosts: localhost
+#- hosts: research_environment
   vars:
     custom_repo: true
     deploy_iptables: true
@@ -40,7 +41,8 @@
       yum:
         name: "@Server with GUI"
         state: present 
-      tag: XWindows
+      tags: 
+        - XWindows
 
 
     - name: Install wget
