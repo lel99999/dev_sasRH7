@@ -1,0 +1,233 @@
+- hosts: research_environment
+  vars:
+    use_epel: true
+    custom_repo: true
+    deploy_iptables: true
+    envir: prod
+# vars_files:
+#   - ~/RHACCOUNT
+  become: yes
+  become_method: sudo
+
+  pre_tasks:
+    - name: register RHEL7 repo
+      command: "/usr/bin/subscription-manager repos --enable=rhel-7-server-rpms --enable=rhel-7-server-extras-rpms --enable=rhel-7-server-optional-rpms"
+    - name: register RHEL7 RHSCL Repo
+      shell: "/usr/bin/subscription-manager repos --enable=rhel-server-rhscl-7-rpms"
+    - name: register RHEL7 DevTools
+      shell: "/usr/bin/subscription-manager repos --enable=rhel-7-server-devtools-rpms"
+    - name: list RHEL enabled repos
+      shell: "/usr/bin/subscription-manager repos --list-enabled"
+      register: enabled_repos
+    - debug:
+        msg: "RHEL Enabled Repos: {{ enabled_repos }}"
+  tasks:
+#   - name: Install X Windows
+#     yum:
+#       name: "@X Window System"
+#       state: present
+
+    - name: Install Development Tools
+#     shell:  yum groupinstall "Development Tools" -y
+      yum:
+        name: "@Development tools"
+        state: present 
+
+#   - name: Install JAVA OpenJDK 1.8
+#     shell: yum install java-1.8.0-openjdk java-1.8.0-openjdk-devel -y
+
+## GDAL Patch ######################################################
+    - name: Check if libkml is already deployed
+      stat:
+        path: /opt/libkml/install-libkml
+      register: libkmlstatus
+
+    - name: Install gdal preliminary addons
+      shell: "{{ item }}"
+      with_items:
+        - wget http://s3.amazonaws.com/etc-data.koordinates.com/gdal-travisci/install-libkml-r864-64bit.tar.gz -O /tmp/install-libkml-r864-64bit.tar.gz
+        - mkdir -p /opt/libkml
+        - tar xzf /tmp/install-libkml-r864-64bit.tar.gz -C /opt/libkml
+        - cp -r /opt/libkml/install-libkml/include/* /usr/local/include
+        - cp -r /opt/libkml/install-libkml/lib/* /usr/local/lib
+        - ldconfig
+      when: libkmlstatus.stat.exists == false
+
+    - name: Check if gdal 2.2.3 already deployed
+      stat:
+        path: /opt/gdal223/gdal-2.2.3
+      register: gdal
+
+    - name: Get and Build gdal 2.2.3
+      become: yes
+      become_method: sudo
+      shell: "{{ item }}"
+      with_items:
+        - wget http://download.osgeo.org/gdal/2.2.3/gdal-2.2.3.tar.gz -O /tmp/gdal-2.2.3.tar.gz
+        - mkdir -p /opt/gdal223
+        - tar xvf /tmp/gdal-2.2.3.tar.gz -C /opt/gdal223
+#       - /opt/gdal223/gdal-2.2.3/configure --prefix=/usr/local/ --with-libkml --with-sfcgal=no
+      when: gdal.stat.exists == false
+
+    - name: Configure gdal 2.2.3
+      become: yes
+      become_method: sudo
+      command: "./configure --prefix=/usr/local/ --with-libkml --with-sfcgal=no"
+      args:
+        chdir: /opt/gdal223/gdal-2.2.3
+      when: gdal.stat.exists == false
+
+    - name: Build and install gdal 2.2.3
+      become: yes
+      become_method: sudo
+      shell: make -j4 && make install
+      args:
+        chdir: /opt/gdal223/gdal-2.2.3
+      when: gdal.stat.exists == false
+
+#       - ./configure --prefix=/usr/local/ --with-libkml --with-sfcgal=no
+#       - make -j4
+#       - make install
+    # unpack, configure, make, make install
+
+
+    - name: Install python gdal bindings - Pip install gdal 2.2.3
+      become: yes
+      become_method: sudo
+      shell: pip3 install gdal==2.2.3
+      when: gdal.stat.exists == false
+
+    - name: create necessary links with ldconfig
+      become: yes
+      become_method: sudo
+      shell: ldconfig
+      when: gdal.stat.exists == false
+
+    - name: Install gdal additional dependencies
+      yum:
+        name: "{{ item }}"
+        state: present
+      with_items:
+        - curl
+        - libcurl
+        - libcurl-devel
+        - postgresql-devel
+
+    - name: Install R Patch packages
+#     vars:
+#       do_r_install_packages: False
+      command: /usr/bin/Rscript --slave --no-save --no-restore-history -e "if (! ('{{ item }}' %in% installed.packages()[,'Package'])) { install.packages(pkgs='{{ item }}', INSTALL_opts=c('--no-test-load'),repos=c('http://cran.rstudio.com/'),dep=TRUE); print('Added'); } else { print('Already installed'); }"
+      with_items:
+        - sf
+        - units
+        - devtools
+      register: r_add_result
+#     failed_when: "r_result.rc != 0 or 'had non-zero exit status' in r_result.stderr"
+#     changed_when: "'Added' in r_result.stdout"
+      environment: "{{ r_env_vars }}"
+      tags:
+        - r
+#     when: install_r_packages and do_r_install_packages
+
+## R Large Package Patch ######################################################
+    - name: Install R Patch packages #1
+#     vars:
+#       do_r_install_packages: False
+      command: /usr/bin/Rscript --slave --no-save --no-restore-history -e "if (! ('{{ item }}' %in% installed.packages()[,'Package'])) { install.packages(pkgs='{{ item }}', INSTALL_opts=c('--no-test-load'),repos=c('http://cran.rstudio.com/'),dep=TRUE); print('Added'); } else { print('Already installed'); }"
+      with_items: "{{ r_packages  }}"
+#       - sf
+#       - units
+#       - devtools
+      register: r_add_result 
+#     failed_when: "r_result.rc != 0 or 'had non-zero exit status' in r_result.stderr"
+#     changed_when: "'Added' in r_result.stdout"
+      environment: "{{ r_env_vars }}"
+      tags:
+        - r
+
+    - name: Install htop
+      yum:
+        name: htop
+        state: present
+
+    - name: Fix rgdal non-zero status exit when installing OpenStreetMap
+      become: yes
+      become_method: sudo
+      shell: cp /usr/local/lib/libgdal.so.* /usr/lib64
+
+    - name: Install OpenStreetMap
+#     shell:  R CMD install.pakcages("OpenStreetMap")
+      command: /usr/bin/Rscript --slave --no-save --no-restore-history -e "if (! ('{{ item }}' %in% installed.packages()[,'Package'])) { install.packages(pkgs='{{ item }}', INSTALL_opts=c('--no-test-load'),repos=c('http://cran.rstudio.com/'),dep=TRUE); print('Added'); } else { print('Already installed'); }"
+      with_items:
+        - OpenStreetMap
+#       - sf
+#       - units
+#       - devtools
+      register: r_add_resultOSP
+#     failed_when: "r_result.rc != 0 or 'had non-zero exit status' in r_result.stderr"
+#     changed_when: "'Added' in r_result.stdout"
+      environment: "{{ r_env_vars }}"
+      tags:
+        - r
+
+    - name: Ensure epel 7 is installed
+      yum:
+        name: https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+        state: present
+
+
+
+  roles:
+    - postgresql-client7
+#   - epel7
+#   - emacsRH7
+#   - openjdk1.8
+#   - odbc7
+#   - postgresql-client
+#   - devtools7
+#   - python2RH7
+#   - python3RH7
+#   - pyenvRH7
+#   - pycharm7
+#   - gocd7
+#   - stattransfer14
+#   - r_RH7
+#   - r-studio-desktopRH7
+#   - r-studio-serverRH7
+#   - r-studio-server-configRH7
+#   - r-shinyRH7
+#   - r-shiny-configRH7
+
+# hosts: research_python
+# become: yes
+# become_method: sudo
+# roles:
+#   - devtools
+#   - devtools6
+#   - {role: python, when: "custom_repo"}
+#   - {role: python-build, when: "not custom_repo"}
+#   - {role: python3, when: "custom_repo"}
+#   - {role: python3-build, when: "not custom_repo"}
+#   - {role: python-libs}
+#   - postgresql-client
+#   - r-core
+#   - r-libs
+#   - r-studio-desktop
+#   - r-studio-server
+#   - r-studio-server-config
+#   - pycharm
+#   - gocd
+#   - stattransfer14
+
+
+
+  post_tasks:
+#   - name: register mime types
+#     shell: update-mime-database /usr/share/mime/packages/
+
+#   - name: remove RHEL7.5
+#     command:  "/usr/bin/subscription-manager remove --all"
+#   - name: unregister RHEL7.5
+#     command:  "/usr/bin/subscription-manager unregister"
+#   - name: clean RHEL7.5
+#     command:  "/usr/bin/subscription-manager clean"7

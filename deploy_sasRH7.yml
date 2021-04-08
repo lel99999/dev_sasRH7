@@ -37,10 +37,11 @@
 #     shell:  yum groupinstall "Development Tools" -y
 
     - name: Install X Windows (Server with GUI)
-      yum:
-        name: "@Server with GUI"
-        state: present 
-      tag: XWindows
+      shell: yum groupinstall "Server with GUI" -y
+#     yum:
+#       name: "@Server with GUI"
+#       state: present 
+#     tag: XWindows
 
 
     - name: Install wget
