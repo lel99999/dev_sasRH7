@@ -250,4 +250,776 @@ marathon_upgrade: False
 #======================#
 ### RedHat 7 Upgrade ###
 #======================#
-rh7_upgrade: False
+rh7_upgrade: True
+
+#================#
+### R Pacakges ###
+#================#
+r_dependencies:
+  - gmp
+  - gmp-devel
+  - gtk+-devel
+  - gtk2-devel
+  - gsl
+  - gsl-devel
+  - leptonica-devel
+  - libxml2
+  - libxml2-devel
+  - libcurl
+  - libcurl-devel
+  - openjpeg-devel
+  - libjpeg-turbo-devel
+  - libwebp-devel
+  - geos
+  - geos-devel
+  - netcdf
+  - netcdf-devel
+  - gdal
+  - gdal-devel
+  - openmpi
+  - openmpi-devel
+  - mesa-libGL
+  - mesa-libGL-devel
+  - mesa-libGLU
+  - mesa-libGLU-devel
+  - mysql
+  - mysql-devel
+  - mysql-connector-odbc
+  - postgresql-odbc
+  - unixODBC
+  - unixODBC-devel
+  - freetds
+  - freetds-devel
+  - QuantLib
+  - QuantLib-devel
+  - glpk
+  - glpk-devel
+  - proj
+  - proj-devel
+  - proj-epsg
+  - dieharder
+  - dieharder-devel
+  - boost-devel
+  - proj-nad
+  - libpng
+  - libpng-devel
+  - librsvg2-devel
+  - zeromq3
+  - zeromq3-devel
+  - tesseract-devel 
+  - texlive-xetex
+  - texlive-texmf-xetex
+  - libssh2-devel
+  - fftw
+  - fftw-devel
+  - v8
+  - v8-devel
+  - udunits2
+  - udunits2-devel
+  - ImageMagick
+  - ImageMagick-c++-devel
+  - poppler-devel
+
+r_packages:
+  - stringi
+  - ggplot2
+  - NeuralNetTools
+  - Rcpp
+  - RcppEigen
+  - actuar
+  - ActuDistns
+  - agricolae
+  - AlgDesign
+  - AMORE
+  - arm
+  #- AtelieR # Need X11
+  - BACCO
+  - base
+  - bayesm # C++11 required
+  - benchden
+  - bgmm
+  - bitops
+  - boa
+  - boot
+  - brnn
+  - car
+  # - caret # broke on Mesos  
+  - caTools
+  - class
+  - clinfun
+  - cluster
+  - coda
+  - codetools
+  - colorspace
+  - compiler
+  - copula
+  - corpora
+  - CRM
+  - ctv
+  - darch
+  - data.table
+  - dataCompareR
+  - datasets
+  - debug
+  - deepnet
+  - dendextend
+  - denstrip
+  #- Design # Removed from CRAN
+  - devtools
+  - dichromat
+  - digest
+  - distr
+  - e1071
+  - elmNN
+  - EMCluster
+  - epibasix
+  #- epicalc # Removed from CRAN
+  - epiR
+  # - esperr # Not on CRAN, seems defunct?
+  - evaluate
+  - evd
+  - evdbayes
+  - evir
+  - experiment
+  - fArma
+  - fAsianOptions
+  - fastcluster
+  - FastImputation
+  - fBasics
+  # - fExcoticOptions # Not compatible with R 3.3.0
+  - flashClust
+  - fOptions
+  - forecast # C++11 required
+  - foreign
+  - frbs
+  # - FrF2 # Broke on Mesos
+  - fts
+  - fugeR
+  - GA
+  # - gdistance # Broke on Mesos
+  - genalg
+  - geoR
+  - geosphere
+  - ggmap
+  - ggplot2
+  # - ggridges # broke on mesos
+  - glmnet
+  - gmt
+  - googleVis
+  - graphics
+  - grDevices
+  # - greta # Broke on Mesos
+  - grid
+  # - Grid2Polygons # broke on Mesos  
+  - grnn
+  - gsl
+  - gstat
+  - gtable
+  - HadoopStreaming
+  - hamlet
+  - HistogramTools
+  - hive
+  - Hmisc
+  - httpuv
+  - httr
+  - humaniformat
+  - idbg
+  # - igraph # Broke on Mesos
+  - its
+  - jsonlite
+  - keras
+  - kernlab
+  - KernSmooth
+  - klaR
+  - knitr
+  - koRpus
+  - labeling
+  - lattice
+  - leafletR
+  - LearnBayes
+  - lme4
+  - lsa
+  - lubridate
+  # - magick # broke on mesos
+  - manipulate
+  - mapdata
+  - mapproj
+  - maps
+  - maptools
+  # - marmap # Broke on Mesos
+  - MASS
+  - Matrix
+  #- MCMCpack # dependency 'graph' no longer on CRAN
+  - MCPMod
+  - memoise
+  - methods
+  - mgcv
+  - micromap
+  - MNP
+  - moments
+  - monmlp
+  - mschart
+  - muhaz
+  - multcomp
+  - munsell
+  - mvtnorm
+  # - ncdf # Obsolete
+  - ncdf4
+  # - igraph # networkD3 Dependency # Broke on Mesos
+  # - networkD3 # Broke on Mesos
+  - neuralnet
+  - nlme
+  - nnet
+  - officer
+  - openNLP
+  - OpenStreetMap
+  - osmar
+  # - pandasql # This is probably a Python package?
+  - parallel
+  - plotGoogleMaps
+  #- plotKML # broke on Mesos
+  - plotrix
+  - plyr
+  # - plyrmr # Not on CRAN, part of RHadoop
+  - pmclust
+  - pnn
+  - prob
+  - proto
+  - pwr
+  - qcc
+  - qrnn
+  - quantmod
+  - r2stl
+  - random
+  - randomForest
+  - randomForestExplainer
+  - randtoolbox
+  - RArcInfo
+  - raster
+  - rattle
+  - Rbitcoin
+  - Rcmdr
+  - RcmdrPlugin.temis
+  - RColorBrewer
+  - RCurl
+  - rdetools
+  - RDieHarder
+  - reshape2
+  - RGA
+  - rgdal
+  - rgeos
+  - rgl
+  - RGoogleAnalytics
+  - RgoogleMaps
+  - rgp
+  #- RHadoop # Not on CRAN
+  #- rhbase # Not on CRAN
+  #- rhdfs # Not on CRAN
+  - rjson
+  - RJSONIO
+  - RKEA
+  - RMongo
+  # - rmr2 # Not on CRAN
+  - RMySQL # Not on CRAN
+  - ROCR
+  - RODBC
+  - RoughSets
+  - roxygen2
+  - rpart
+  - RPostgreSQL
+  # - RPyGeo # Not compatible with R 3.3.0
+  - RSNNS
+  - RSQLite
+  # - Rstem # Removed from CRAN
+  # - RSurvey # Broke on Mesos
+  - RTextTools
+  - RWeka
+  - sampleSelection
+  - sandwich
+  - scales
+  - sem
+  - seplyr
+  - setRNG
+  - shapefiles
+  - shiny
+  # - slidify # Not on CRAN
+  - sp
+  - spacetime
+  - spatial
+  - spatial.tools
+  - spdep
+  - spgrass6
+  - splines
+  - spsurvey
+  - sqldf
+  - statnet
+  - stats
+  - stats4
+  - stream
+  - stringdist
+  - stringr
+  - SuppDists
+  - surveillance
+  - survival
+  #- sweep # Broke on mesos
+  - tau
+  - tcltk
+  - testthat
+  - textcat
+  - textir
+  - tgp
+  #- tidygraph # Broke on mesos
+  - timeDate
+  - timeSeries
+  - tm
+  - tm.plugin.dc
+  - tm.plugin.factiva
+  - tm.plugin.lexisnexis
+  - tm.plugin.mail
+  - tm.plugin.webmining
+  - tools
+  - topicmodels
+  - tree
+  - TrialSize
+  - truncreg
+  - tseries
+  # - UScensus2000blkgrp # No longer on CRAN
+  - UScensus2000cdp
+  - UScensus2000tract
+  - utils
+  - vcd
+  - VGAM
+  - visdat
+  - whisker
+  - wle
+  - wordcloud
+  - wordnet
+  - xaringan
+  - XML
+  - xtable
+  - xts
+  - zipcode
+  - zoo
+  - stringr
+  - assertthat
+  - readr
+  - ggvis
+  - pryr
+  - rvest
+  - twitteR
+  - Rfacebook
+  - RSQLServer
+  # tigris now requires GDAL 2.0+, which is not availble on EPEL
+  #- tigris
+  - broom
+  - dplyr
+  - tidyr
+  - acs
+  - leaps
+  - lda
+  - LDAvis
+  - Rtsne
+  - htmlwidgets
+  - leaflet
+  - dygraphs
+  - plotly
+  # - DataTables # Not on CRAN
+  # - DiagrammeR # Broke on Mesos
+  - metricsgraphics
+  - googleVis
+  - rzmq
+  # - repr # Broke on Mesos
+  - purrr
+  - fuzzyjoin
+  - microbenchmark
+  - itertools
+  # - textmineR # Depends on text2vec, which requires C++11 # broke on Mesos
+  # - text2vec # Requires C++11 # broke on Mesos
+  - riverplot
+  - forecastHybrid # Requires C++11
+  - fslr
+  # - gpuR # Newer OS is needed, plus we have no GPU's
+  # - imager # broke on Mesos
+  - jsonlite
+  - janeaustenr
+  # - tidytext # Requires C++11 # Broke on Mesos
+  # - ggraph # Not on CRAN
+  - mgm
+  - getPass
+  # - gganimate # Not on CRAN
+  - historydata
+  - pacman
+  - htmlwidgets
+  # - chorddiag # Not on CRAN
+  - babynames
+  - dygraphs
+  - DT
+  - d3Network
+  # - sigma # Not on CRAN
+  - d3heatmap
+  # - threejs # Broke on Mesos
+  - feather # Requires C++11
+  - RNeo4j
+  - elastic
+  # - geomnet # Broke on Mesos
+  # - ggnetwork # Broke on Mesos
+  # - googleway # Broke on Mesos
+  # - ANLP # broke on Mesos
+  - fakeR
+  - mvtboost
+  # - preprosim # Broke On Mesos
+  - pander
+  - forcats
+  - sparklyr
+  # - PKI # Broke on Mesos
+  - packrat
+  # - rsconnect # Broke on Mesos
+  - profvis
+  - haven
+  - readxl
+  - rmarkdown
+  - textreuse
+  # - odbc # Broke on Mesos
+  # - drake # Broke on Mesos
+  - kerasR
+  - modeval
+  - ggedit
+  - blob
+  - googlesheets
+  - gender
+  - elasticsearchr
+  - janitor
+  - diffobj
+  - glue
+  # - filesstrings # Broke on Mesos
+  # - sf  # requires GDAL>=2.0
+  # - rnaturalearth  # requires GDAL>=2.0
+  - shinyWidgets
+  # - plumber # Broke on Mesos
+
+r_packages_with_opts: []
+  #-
+  #  name: udunits2
+  #  include: /usr/include/udunits2
+   # lib: /usr/lib64
+
+r_packages_github:
+  - name: rCharts
+    user: ramnathv
+   
+  - name: flexdashboard
+    user: rstudio
+   
+  - name: shinydashboard
+    user: rstudio
+   
+  - name: shinyjs
+    user: daattali
+   
+  - name: miniUI
+    user: rstudio
+   
+  - name: DT
+    user: rstudio
+   
+  - name: rticles
+    user: rstudio
+   
+  - name: pixiedust
+    user: nutterb
+   
+  - name: DiagrammeR
+    user: rich-iannone
+   
+  - name: shinythemes
+    user: rstudio
+   
+  - name: rbokeh
+    user: bokeh
+   
+  - name: highcharter
+    user: jbkunst
+   
+  - name: RSQLServer
+    user: imanuelcostigan
+   
+  - name: htmlwidgets
+    user: sparkline
+   
+  - name: streamgraph
+    user: hrbrmstr
+   
+  - name: rthreejs
+    user: bwlewis
+   
+  - name: IRkernel
+    user: IRkernel
+
+  - name: IRdisplay
+    user: IRkernel
+   
+  - name: elasticdsl
+    user: ropensci
+   
+  - name: ggiraph
+    user: davidgohel
+   
+  - name: ggforce
+    user: thomasp85
+   
+  - name: ggraph
+    user: thomasp85
+   
+  - name: gganimate
+    user: dgrtwo
+   
+  - name: plotROC
+    user: sachsmc
+   
+  - name: wordVectors
+    user: bmschmidt
+   
+  - name: tidyjson
+    user: sailthru
+   
+  - name: bookdown
+    user: rstudio
+   
+  - name: twidlr
+    user: drsimonj
+   
+  - name: googledrive
+    user: tidyverse
+   
+  - name: tensorflow
+    user: rstudio
+   
+  - name: blogdown
+    user: rstudio
+
+r_env_vars:
+  CPATH: /usr/include/glpk
+  DH_LIBDIR: /usr/lib64 # For RDieHarder
+  CC: /opt/rh/devtoolset-2/root/usr/bin/gcc
+  CPP: /opt/rh/devtoolset-2/root/usr/bin/cpp
+  CXX: /opt/rh/devtoolset-2/root/usr/bin/c++
+  PATH: /opt/rh/devtoolset-2/root/usr/bin:/usr/local/bin:/usr/bin:/usr/sbin:/bin:/sbin
+
+#======================#
+### Python Packages  ###
+#======================#
+
+python_dep_packages:
+  - atlas
+  - atlas-devel
+  - bzip2
+  - bzip2-devel
+  - cracklib
+  - cracklib-devel
+  - cracklib-python
+  - cups
+  - cups-devel
+  - dbus
+  - freetds
+  - freetds-devel
+  - gdal
+  - gdal-devel
+  - gdal-python
+  - gdbm
+  - gdbm-devel
+  - gnome-packagekit
+  - gpgme
+  - gpgme-devel
+  - gtk+
+  - gtk+-devel
+  - hdf5
+  - hdf5-devel
+  - ipa-python
+  - lapack
+  - lapack-devel
+  - libcurl
+  - libcurl-devel
+  - libffi
+  - libffi-devel
+  - libiscsi
+  - libiscsi-devel
+  - libiscsi-utils
+  - libjpeg
+  - libjpeg-devel
+  - libproxy
+  - libproxy-python
+  - libreport
+  - libreport-devel
+  - libreport-python
+  - libselinux
+  - libselinux-python
+  # TODO: Determine if these are required
+  # These conflict with samba4 packages
+  # - libsmbclient
+  # - libsmbclient-devel
+  - libtalloc
+  - libtalloc-devel
+  - libuser
+  - libuser-python
+  - libwnck
+  - libwnck-devel
+  - libxml2
+  - libxml2-devel
+  - libxslt
+  - libxslt-devel
+  - libxslt-python
+  - lzo
+  - lzo-devel
+  - openblas
+  - openblas-devel
+  - openldap
+  - openldap-devel
+  - policycoreutils-python
+  - pygobject2
+  - pygpgme
+  - pygtk2
+  - pygtk2-devel
+  - pytalloc
+  - pytalloc-devel
+  - python-ethtool
+  - python-gudev
+  #- python-hwdata
+  - python-krbV
+  - python-ldap
+  - python-sssdconfig
+  - pywebkitgtk
+  - pyxf86config
+  - setools
+  - setools-devel
+  - setools-libs
+  - setools-libs-python
+  - sos
+  - sssd
+  - subversion
+  - unixODBC-devel
+  - vte
+  - vte-devel
+  - wireless-tools
+  #- epic5 # for cas
+  #- hg # for cas
+  #- python-gi
+  #- subversion-devel
+
+python_packages:
+  - Cython
+  - beaker
+  - cairocffi
+  - Canvas
+  - cracklib
+  - pycrypto #Crypto
+  - pycups # cups # cupsext # cupshelpers
+  - pycurl #curl
+  - dateutils
+  - pydbus
+  - decorator
+  - dmidecode
+  - egg
+  - email
+  - python-ldap
+  - flock
+  - folium
+  - pkgconfig
+  - iniparse
+  - ipython==5.3
+  - xmpppy #- jabber
+  - jinja2
+  - kerberos
+  - logging
+  - lxml
+  - orca
+  - openpyxl # Read/Modify Excel files. Used by Data Catalog.
+  - ORBit
+  - paramiko
+  - pydocs
+  - pygst_utils
+  - py-notify
+  - pyodbc
+  - pysolr
+  - pytz
+  - pyzmq
+  - readline
+  - python-space
+  - pyinsane #- scanext
+  - numpy
+  - scipy
+  - scikit-learn
+  - slip
+  # TODO: Verify if pysmbc is still needed, as dependencies are broken with samba4
+  # - pysmbc
+  - svn
+  - theano
+  - timing
+  - tornado
+  - vincent
+  - wsgiref
+  - pyaml
+  - cookiecutter
+  - luigi
+  - ansible
+  - statsmodels
+  - keras
+
+python3_packages:
+  - Cython
+  - beaker
+  - cairocffi
+  - Canvas
+  - cracklib
+  - pycrypto #Crypto
+  - pycups # cups # cupsext # cupshelpers
+  - pycurl #curl
+  - dateutils
+  - pydbus
+  - decorator
+  #- dmidecode
+  - egg
+  #- email
+  #- python-ldap
+  - flock
+  - folium
+  - pkgconfig
+  - iniparse
+  - ipython
+  - xmpppy #- jabber
+  - jinja2
+  #- kerberos
+  #- logging
+  - lxml
+  - orca
+  - ORBit
+  - paramiko
+  - pydocs #_topics
+  #- pygst_utils
+  #- py-notify
+  - pyodbc
+  - pysolr
+  - pytz
+  - pyzmq
+  - readline
+  - python-space
+  - pyinsane #- scanext
+  - numpy
+  - scipy
+  - scikit-learn
+  - slip
+  # TODO: Verify if needed
+  # - pysmbc
+  - svn
+  # TODO: Figure out what this is?
+  #- test
+  - theano
+  #- timing
+  - tornado
+  - vincent
+  #- wsgiref
+  - pyaml
+  - cookiecutter
+  - luigi
+  - statsmodels
+  - keras
+
