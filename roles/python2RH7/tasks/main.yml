@@ -1,5 +1,8 @@
 # main.yml - Install Python 2.7 and Packages from RedHat Satellite
 ---
+- name: Add RHEL 7 SCL repo
+  shell: subscription-manager repos --enable=rhel-server-rhscl-7-rpms
+ 
 - name: Install Python27 packages
   yum:
     name: "{{ item }}"
@@ -23,13 +26,29 @@
 #  pip:
 #    name: virtualenvwrapper
 #    state: present
-    
-#################### Python 2.7 Issues ####################
-#- name: SCL Enable Pip Install Upgrade Pip 
-#  shell: |
-#    scl enable python27 -- pip install --upgrade pip
-#  become: yes
-#  become_method: sudo
+
+- name: Get pip
+  shell: curl https://bootstrap.pypa.io/get-pip.py -o /tmp/get-pip.py --insecure
+
+##  Validate certificate error encountered 
+#  get_url:
+#   url: https://bootstrap.pypa.io/get-pip.py
+#   dest: /tmp/get-pip.py
+#   mode: '0755'
+
+- name: Install pip
+  shell: python /tmp/get-pip.py
+
+- name: SCL Enable Pip Install Upgrade Pip 
+  shell: |
+##  Fixes pip breakage when updated >= 21.0
+#   scl enable python27 -- curl -O https://bootstrap.pypa.io/pip/2.7/get-pip.py
+#   scl enable python27 -- python get-pip.py
+    scl enable python27 -- pip install --upgrade "pip < 21.0"
+#   scl enable python27 bash 
+#   pip install --upgrade pip
+  become: yes
+  become_method: sudo
 
 # Already Installed with RHEL 7
 #- name: SCL Enable Pip Install virtualenvwrapper
@@ -38,13 +57,11 @@
 #  become: yes
 #  become_method: sudo
 
-#################### Python 2.7 Issues ####################
-#
-#- name: SCL Enable Pip Install numpy, scipy
-#  shell: |
-#    scl enable python27 -- pip install numpy scipy 
-#  become: yes
-#  become_method: sudo
+- name: SCL Enable Pip Install numpy, scipy
+  shell: |
+    scl enable python27 -- pip install numpy scipy 
+  become: yes
+  become_method: sudo
 
 #- name: Install pip
 #  easy_install:
