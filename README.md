@@ -164,4 +164,5 @@ Click Run button and view the Log tab <br/>
 
 Click Save to Save to Home folder <br/>Log into SAS Interactive to verify log output <br/>
 
-
+#### Troubleshooting with SAS Logs
+View deployment files in <SASHome>/InstallMisc/InstallLogs <br/>
