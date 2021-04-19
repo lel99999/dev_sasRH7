@@ -1,7 +1,6 @@
 ---
 # envir: {dev.local,dev,prod,aws}
 # ENV: {dev.local,dev,prod,aws}
-#envir: dev
 envir: dev
 
 # Real variables should be placed in respective environment directories within
@@ -72,8 +71,8 @@ install_eod: False
 install_python: True
 
 # Proxy settings
-proxy_host:
-proxy_port:
+#proxy_host:
+#proxy_port:
 
 # Git branch settings
 git_environment: master
@@ -236,10 +235,10 @@ pp_custom_test_scripts:
 pg_wal: pg_wal
 
 # Eod symlinks
-eod_symlinks: []
+# eod_symlinks: []
 
 # Research environment printers symlinks
-printers_symlinks: []
+# printers_symlinks: []
 
 # User provided packages for database customization
 db_automation_custom_packages: []
@@ -254,7 +253,7 @@ marathon_upgrade: False
 #======================#
 ### RedHat 7 Upgrade ###
 #======================#
-rh7_upgrade: False
+rh7_upgrade: True
 
 #==========================#
 ### Java Deploy Settings ###
@@ -268,7 +267,7 @@ java_deploy_options:
   - "deployment.security.valdiation.ocsp=true"
 
 jdk_packages:
-#  - jdk1.8.0_45
+  # - jdk1.8.0_45
   - java-1.8.0-openjdk
   - libselinux-python
 
@@ -277,84 +276,309 @@ jdk_packages:
 jre_lib_path: /etc/alternatives/jre/lib
 java_home_path: /etc/alternatives/jre
 
-#=======================#
-### R Studio Settings ###
-#=======================#
-ip_whitelist:
-  - 10.95.75.73
-
-#r_shiny_server_package: "http://download3.rstudio.org/centos5.9/x86_64/shiny-server-1.5.3.838-rh5-x86_64.rpm"
-r_shiny_server_package: "https://download3.rstudio.org/centos7/x86_64/shiny-server-1.5.16.958-x86_64.rpm"
-#rstudio_server_package_name: "http://download2.rstudio.org/rstudio-server-rhel-1.0.143-x86_64.rpm"
-rstudio_server_package_name: "https://download2.rstudio.org/server/centos7/x86_64/rstudio-server-rhel-1.4.1106-x86_64.rpm"
-r_shiny_pro: False
-rstudio_pro: False
-revolution_r_package: rev-r-enterprise
-revolution_r_path: /usr/local/lib64/Revo-7.4/R-3.1.3
-rstudio_secret_header: "X-Secret-User-Header"
-shiny_groups: "_grp_dsa _grp_dataadmins"
-
-revolution_r_env_vars:
-  CPATH: /usr/include/glpk
-  DH_LIBDIR: /usr/lib64 # For RDieHarder
-  R_ARCH: ""
-  CC: /opt/rh/devtoolset-2/root/usr/bin/gcc
-  CPP: /opt/rh/devtoolset-2/root/usr/bin/cpp
-  CXX: /opt/rh/devtoolset-2/root/usr/bin/c++
-  PATH: /opt/rh/devtoolset-2/root/usr/bin:/usr/local/bin:/usr/bin:/usr/sbin:/bin:/sbin
-
-revolution_r_dependencies:
+#======================#
+### Python Pacakges ###
+#======================#
+python_dep_packages_mod:
+  - atlas
+  # - atlas-devel # Error - no matching distribution
+  - bzip2
+  - bzip2-devel
+  - cracklib
+  - cracklib-devel
+  - cracklib-python
+  - cups
+  - cups-devel
+  - dbus
+  - gdal
+  - gdal-devel
+  - gdal-python
+  - gdbm
+  - gdbm-devel
+  - gnome-packagekit
+  - gpgme
+  - gpgme-devel
+  # - gtk+  # Error generated
+  # - gtk+-devel
+  - hdf5
+  - hdf5-devel
+  - ipa-python
+  - lapack
+  - lapack-devel
+  - libcurl
   - libcurl-devel
+  - libffi
+  - libffi-devel
+  - libiscsi
+  - libiscsi-devel
+  - libiscsi-utils
+  - libjpeg
+  - libjpeg-devel
+  - libproxy
+  - libproxy-python
+  - libreport
+  - libreport-devel
+  - libreport-python
+  - libselinux
+  - libselinux-python
+  - libsmbclient
+  - libsmbclient-devel
+  - libtalloc
+  - libtalloc-devel
+  - libuser
+  - libuser-python
+  - libwnck
+  - libwnck-devel
+  - libxml2
   - libxml2-devel
-  - hunspell-devel
+  - libxslt
+  - libxslt-devel
+  - libxslt-python
+  - lzo
+  - lzo-devel
+  - openblas
+  - openblas-devel
+  - openldap
+  - openldap-devel
+  - policycoreutils-python
+  - pygobject2
+  - pygpgme
+  - pygtk2
+  - pygtk2-devel
+  - pytalloc
+  - pytalloc-devel
+  - python-ethtool
+  - python-gudev
+  - python-hwdata
+  - python-krbV
+  - python-ldap
+  - python-sssdconfig
+  - pywebkitgtk
+  # - pyxf86config   # Not found 3/24
+  - setools
+  - setools-devel
+  - setools-libs
+  # - setools-libs-python  # Not found 3/24
+  - sos
+  - sssd
+  - subversion
+  - unixODBC-devel
+  - vte
+  - vte-devel
+  - wireless-tools
+  # - epic5 # for cas
+  # - hg # for cas
+  # - python-gi
+  # - subversion-devel
 
-revolution_r_packages:
-  # - car # Requires R > 3.2.0
-  # - caret # C++11 # Requires car
-  - data.table # C++11
-  - devtools #C++11
-  - dplyr #C++11
-  - httr
-  - ggplot2 #C++11
-  - jsonlite
-  - lda #C++11
-  - LDAvis #C++11
-  - RPostgreSQL
-  # - RSQLServer # Requires R > 3.2.0
-  - stringi
-  - stringr
-  # - readr #C++11 # Doesn't seem compatible with R 3.1.x or Rcpp 0.11.6
-  - tidyr #C++11
-  - slam
-  # - topicmodels  # returns non-zero exit status
-  - rzmq
-  - repr
-  # - SparkR # Installed as part of Spark
-  - pbdZMQ
+python_packages:
+  - Cython
+  # - abrt
+  # - acutil # authconfig RPM?
+  # - atk # Atk?
+  # - audit # Unknown package
+  # - auparse # Unknown package
+  - beaker
+  # - bonobo # Unknown package
+  - cairocffi
+  - Canvas
+  # - cas # Missing and unknown dependency
+  # - omniorb # CORBA
+  # - PyORBit
+  - cracklib
+  - pycrypto #Crypto
+  - pycups # cups # cupsext # cupshelpers
+  - pycurl #curl
+  - dateutils
+  - pydbus
+  # - dbus_bindings # Part of pydbus
+  - decorator
+  # - default_encoding_utf8 # No idea what this is
+  # - Dialog # No module _tkinter
+  - dmidecode
+  # - dmidecodemod
+  # - drv_libxml2
+  # - dsextras # PyORBit
+  # - dsml
+  - egg
+  - email
+  - python-ldap
+  # - ethtool # yum package
+  # - fcntl
+  - flock
+  - folium
+  # - FileDialog # tkinter
+  # - FixTk # tkinter
+  # - gconf # pkgconfig
+  - pkgconfig
+  # - gdal
+  # - gdbm # - RPM
+  # - PyGObject
+  # - glib # - RPM
+  # - gluster # https://github.com/joejulian/python-gluster ?
 
-revolution_r_packages_url:
-  -
-    package: devtools
-    url: "https://cran.r-project.org/src/contrib/Archive/devtools/devtools_1.11.1.tar.gz"
+  # GTK stuff
+  # - gmenu
+  # - gnome
+  # - gnomeapplet
+  # - gnomecanvas
+  # - gnomekeyring
+  # - gnomevfs
+  # - gobject
+  # - gst
+  # - gstoption
+  # - gtk
+  # - gtksourceview2
+  # - gtkunixprint
+  # - gpgme # RPMS
+  # - gudev # RPM
+  # - hpmudext # Cups?
+  # - hwdata # RPM
+  # - invest # Unknown package
+  # - iotop # Python top port, no pip package
+  # - ipalib - ipapython # RPM's
+  - iniparse
+  - ipython==5.3
+  # - iwlib
+  # - ixf86config # Seems to be related to Rocks Cluster software
+  - xmpppy # - jabber
+  - jinja2
+  - kerberos
+  # - krbV # RPM
+  # - ldap # RPM
+  # - ldapurl # python-ldap RPM
+  # - ldif # python-ldap RPM
+  # - libiscsi # RPM
+  # - libproxy # RPMs
+  # - libsvn # RPM
+  # - libuser # RPM
+  - logging
+  # - libxml2-python
+  # - libxml2mod
+  - lxml
+  - orca
+  - meh
+  - nss
+  - OpenSSL
+  - ORBit
+  # - packagekit # RPM
+  # - pango # GTK
+  # - pangocairo # GTK
+  # - pcardext # cups
+  # - PortableServer # ORB
+  # - pyatspi # Mandriva?
+  - paramiko
+  - pydocs
+  - pygst_utils
+  # - pygtk # windows
+  # - pyhbac # sssd RPM
+  - py-notify
+  # - pynum # scipy
+  - pyodbc
+  - pysolr
+  # - pysss # sssd RPM
+  # - pysss_murmur # sssd RPM
+  - pytz
+  - pyzmq
+  - readline
+  # - report # RPM
+  # - reportclient # RPM
+  # - rhn
+  - python-space
+  # - rpm # Native to RHEL
+  # - rpmUtils # Native to RHEL
+  - pyinsane
+  # - scanext
+  - numpy
+  - scipy
+  - scikit-learn
+  # - ScrolledText # tkinter
+  # - selinux # RPM
+  # - semanage # policycoreutils-python RPM
+  # - setools # RPMs
+  # - SimpleDialog # tkinter
+  - slip
+  - pysmbclient
+  # - pysmbc # replaced by pysmbclient
+  # - snack # tkinter
+  # - sos # RPM
+  # - sqlitecachec # sqlite3
+  # - SSSDConfig # RPM
+  # - system_config_keyboard # Anaconda?
+  - svn
+  # - talloc
+  - pip-install-test
+  # - test # replaced by pip-install-test
+  - theano
+  - timing
+  # - tkColorChooser # tkinter
+  # - tkCommonDialog # tkinter
+  # - Tkdnd # tkinter
+  # - tkFileDialog #tkinter
+  # - tkFont # tkinter
+  # - tkMessageBox # tkinter
+  # - tkSimpleDialog # tkinter
+  - tornado
+  # - urlgrabber # pycurl broken
+  - vincent
+  # - vte
+  # - webkit # RPM
+  # - wnck # RPM
+  # - xf86config RPM
+  - wsgiref
+  - pyaml
+  # - yumutils # Unknown
+  - cookiecutter
+  - luigi
+  - ansible
+  - statsmodels
+  - keras
 
-revolution_r_packages_github:
-  -
-    user: IRkernel
-    name: IRkernel
-  -
-    user: IRkernel
-    name: IRdisplay
-
-# Depends on C++11
-# Fails with error: object 'union_all' not found whilst loading namespace
-#  -
-#    user: RevolutionAnalytics
-#    name: dplyrXdf
-
-revolution_r_commands:
-  - "IRkernel::installspec(name='revor', displayname='RevoR')"
-
-shiny_http_headers: "X-SHINY-USER"
+#python3_packages:
+#  - Cython
+#  - beaker
+#  - cairocffi
+#  - Canvas
+#  - cracklib
+#  - pycrypto
+#  - pycups
+#  - pycurl
+#  - dateutils
+#  - pydbus
+#  - decorator
+#  - egg
+#  - flock
+#  - folium
+#  - pkgconfig
+#  - iniparse
+#  - ipython
+#  - xmpppy
+#  - jinja2
+#  - lxml
+#  - orca
+#  - ORBit
+#  - paramiko
+#  - pydocs
+#  - pyodbc
+#  - pysolr
+#  - pytz
+#  - pyzmq
+#  - readline
+#  - python-space
+#  - pyinsane
+#  - numpy
+#  - scipy
+#  - scikit-learn
+#  - slip
+#  - svn
+#  - theano
+#  - tornado
+#  - vincent
+#  - pyaml
+#  - cookiecutter
+#  - luigi
+#  - statsmodels
+#  - keras
 
 #================#
 ### R Pacakges ###
@@ -389,7 +613,7 @@ r_dependencies:
   - mysql
   - mysql-devel
   - mysql-connector-odbc
-# - postgresql-odbc
+  # - postgresql-odbc
   - unixODBC
   - unixODBC-devel
   - freetds
@@ -411,8 +635,8 @@ r_dependencies:
   - zeromq3
   - zeromq3-devel
   - tesseract-devel
-  #- texlive-xetex
-  #- texlive-texmf-xetex
+  # - texlive-xetex
+  # - texlive-texmf-xetex
   - libssh2-devel
   - fftw
   - fftw-devel
@@ -423,8 +647,8 @@ r_dependencies:
   - ImageMagick
   - ImageMagick-c++-devel
 
-#r_packages:
-r_packages1:
+r_packages:
+#r_packages1:
   - stringi
   - ggplot2
   - NeuralNetTools
@@ -436,17 +660,17 @@ r_packages1:
   - AlgDesign
   - AMORE
   - arm
-  #- AtelieR # Need X11
-  - BACCO
+  # - AtelieR # Need X11
+  # - BACCO  ## Error 
   - base
   - bayesm # C++11 required
   - benchden
-  - bgmm
+  # - bgmm  ## Error
   - bitops
   - boa
   - boot
   - brnn
-  - car
+  # - car  ## Error
   - caret
   - caTools
   - class
@@ -456,7 +680,7 @@ r_packages1:
   - codetools
   - colorspace
   - compiler
-  - copula
+  # - copula ## Error
   - corpora
   - CRM
   - ctv
@@ -468,7 +692,7 @@ r_packages1:
   - deepnet
   - dendextend
   - denstrip
-  #- Design # Removed from CRAN
+  # - Design # Removed from CRAN
   - devtools
   - dichromat
   - digest
@@ -496,7 +720,7 @@ r_packages1:
   - forecast # C++11 required
   - foreign
   - frbs
-  - FrF2
+  # - FrF2  ## Error
   - fts
   - fugeR
   - GA
@@ -516,13 +740,13 @@ r_packages1:
   - grid
   - Grid2Polygons
   - grnn
-  - gsl
+  # - gsl  ## Error
   - gstat
   - gtable
   - HadoopStreaming
   - hamlet
   - HistogramTools
-  - hive
+  # - hive  ## Error
   - Hmisc
   - httpuv
   - httr
@@ -541,11 +765,11 @@ r_packages1:
   - lattice
   - leafletR
   - LearnBayes
-  - lme4
+  # - lme4  ## Error
   - lsa
   - lubridate
-
-r_packages2:
+##############  
+# r_packages2:
   - magick
   - manipulate
   - mapdata
@@ -636,8 +860,8 @@ r_packages2:
   - RSNNS
   - RSQLite
   # - Rstem # Removed from CRAN
-
-r_packages3:
+##############
+# r_packages3:
   - RSurvey
   - RTextTools
   - RWeka
@@ -737,8 +961,8 @@ r_packages3:
   - rzmq
   - repr
   - purrr
-
-r_packages4:
+##############
+# r_packages4:
   - fuzzyjoin
   - microbenchmark
   - itertools
@@ -807,105 +1031,106 @@ r_packages4:
   - plumber
 
 r_packages_with_opts:
-  -
-    name: udunits2
+  - name: udunits2
     include: /usr/include/udunits2
     lib: /usr/lib64
 
-r_packages_github:
-  # - "http://cran.r-project.org/src/contrib/Archive/RQuantLib/RQuantLib_0.3.12.tar.gz" # The latest version requires QuantLib 1.4.0, which is not supported by Centos 6.5
-  - name: rCharts
-    user: ramnathv
-
-  - name: flexdashboard
-    user: rstudio
-
-  - name: shinydashboard
-    user: rstudio
-
-  - name: shinyjs
-    user: daattali
-
-  - name: miniUI
-    user: rstudio
-
-  - name: DT
-    user: rstudio
-
-  - name: rticles
-    user: rstudio
-
-  - name: pixiedust
-    user: nutterb
-
-  - name: DiagrammeR
-    user: rich-iannone
-
-  - name: shinythemes
-    user: rstudio
-
-  - name: rbokeh
-    user: bokeh
-
-  - name: highcharter
-    user: jbkunst
-
-  - name: RSQLServer
-    user: imanuelcostigan
-
-  - name: htmlwidgets
-    user: sparkline
-
-  - name: streamgraph
-    user: hrbrmstr
-
-  - name: rthreejs
-    user: bwlewis
-
-  - name: IRkernel
-    user: IRkernel
-
-  - name: IRdisplay
-    user: IRkernel
-
-  - name: elasticdsl
-    user: ropensci
-
-  - name: ggiraph
-    user: davidgohel
-
-  - name: ggforce
-    user: thomasp85
-
-  - name: ggraph
-    user: thomasp85
-
-  - name: gganimate
-    user: dgrtwo
-
-  - name: plotROC
-    user: sachsmc
-
-  - name: wordVectors
-    user: bmschmidt
-
-  - name: tidyjson
-    user: sailthru
-
-  - name: bookdown
-    user: rstudio
-
-  - name: twidlr
-    user: drsimonj
-
-  - name: googledrive
-    user: tidyverse
-
-  - name: tensorflow
-    user: rstudio
-
-  - name: blogdown
-    user: rstudio
+#r_packages_github:
+#### - "http://cran.r-project.org/src/contrib/Archive/RQuantLib/RQuantLib_0.3.12.tar.gz"
+#### The latest version requires QuantLib 1.4.0, which is not supported by Centos 6.5
+#  -
+#    name: rCharts
+#    user: ramnathv
+#  -
+#    user: rstudio
+#    name: flexdashboard
+#  -
+#    name: shinydashboard
+#    user: rstudio
+#  -
+#    name: shinyjs
+#    user: daattali
+#  -
+#    name: miniUI
+#    user: rstudio
+#  -
+#    name: DT
+#    user: rstudio
+#  -
+#    name: rticles
+#    user: rstudio
+#  -
+#    name: pixiedust
+#    user: nutterb
+#  -
+#    name: DiagrammeR
+#    user: rich-iannone
+#  -
+#    name: shinythemes
+#    user: rstudio
+#  -
+#    name: rbokeh
+#    user: bokeh
+#  -
+#    name: highcharter
+#    user: jbkunst
+#  -
+#    name: RSQLServer
+#    user: imanuelcostigan
+#  -
+#    name: htmlwidgets
+#    user: sparkline
+#  -
+#    name: streamgraph
+#    user: hrbrmstr
+#  -
+#    name: rthreejs
+#    user: bwlewis
+#  -
+#    user: IRkernel
+#    name: IRkernel
+#  -
+#    user: IRkernel
+#    name: IRdisplay
+#  -
+#    user: ropensci
+#    name: elasticdsl
+#  -
+#    user: davidgohel
+#    name: ggiraph
+#  -
+#    user: thomasp85
+#    name: ggforce
+#  -
+#    user: thomasp85
+#    name: ggraph
+#  -
+#    user: dgrtwo
+#    name: gganimate
+#  -
+#    user: sachsmc
+#    name: plotROC
+#  -
+#    user: bmschmidt
+#    name: wordVectors
+#  -
+#    user: sailthru
+#    name: tidyjson
+#  -
+#    user: rstudio
+#    name: bookdown
+#  -
+#    user: drsimonj
+#    name: twidlr
+#  -
+#    user: tidyverse
+#    name: googledrive
+#  -
+#    user: rstudio
+#    name: tensorflow
+#  -
+#    user: rstudio
+#    name: blogdown
 
 r_env_vars:
   CPATH: /usr/include/glpk
@@ -915,440 +1140,81 @@ r_env_vars:
   CXX: /opt/rh/devtoolset-2/root/usr/bin/c++
   PATH: /opt/rh/devtoolset-2/root/usr/bin:/usr/local/bin:/usr/bin:/usr/sbin:/bin:/sbin
 
-#======================#
-### Python Pacakges ###
-#======================#
-python_dep_packages_mod:
-  - atlas
-  - atlas-devel
-  - bzip2
-  - bzip2-devel
-  - cracklib
-  - cracklib-devel
-  - cracklib-python
-  - cups
-  - cups-devel
-  - dbus
-  - gdal
-  - gdal-devel
-  - gdal-python
-  - gdbm
-  - gdbm-devel
-  - gnome-packagekit
-  - gpgme
-  - gpgme-devel
-  - gtk+
-  - gtk+-devel
-  - hdf5
-  - hdf5-devel
-  - ipa-python
-  - lapack
-  - lapack-devel
-  - libcurl
+#=======================#
+### R Studio Settings ###
+#=======================#
+ip_whitelist:
+  - 10.95.75.73
+
+#r_shiny_server_package: "http://download3.rstudio.org/centos5.9/x86_64/shiny-server-1.5.3.838-rh5-x86_64.rpm"
+r_shiny_server_package: "https://download3.rstudio.org/centos7/x86_64/shiny-server-1.5.16.958-x86_64.rpm"
+#rstudio_server_package_name: "http://download2.rstudio.org/rstudio-server-rhel-1.0.143-x86_64.rpm"
+rstudio_server_package_name: "https://download2.rstudio.org/server/centos7/x86_64/rstudio-server-rhel-1.4.1106-x86_64.rpm"
+r_shiny_pro: False
+rstudio_pro: False
+revolution_r_package: rev-r-enterprise
+revolution_r_path: /usr/local/lib64/Revo-7.4/R-3.1.3
+rstudio_secret_header: "X-Secret-User-Header"
+shiny_groups: "_grp_dsa _grp_dataadmins"
+
+revolution_r_env_vars:
+  CPATH: /usr/include/glpk
+  DH_LIBDIR: /usr/lib64 # For RDieHarder
+  R_ARCH: ""
+  CC: /opt/rh/devtoolset-2/root/usr/bin/gcc
+  CPP: /opt/rh/devtoolset-2/root/usr/bin/cpp
+  CXX: /opt/rh/devtoolset-2/root/usr/bin/c++
+  PATH: /opt/rh/devtoolset-2/root/usr/bin:/usr/local/bin:/usr/bin:/usr/sbin:/bin:/sbin
+
+revolution_r_dependencies:
   - libcurl-devel
-  - libffi
-  - libffi-devel
-  - libiscsi
-  - libiscsi-devel
-  - libiscsi-utils
-  - libjpeg
-  - libjpeg-devel
-  - libproxy
-  - libproxy-python
-  - libreport
-  - libreport-devel
-  - libreport-python
-  - libselinux
-  - libselinux-python
-  - libsmbclient
-  - libsmbclient-devel
-  - libtalloc
-  - libtalloc-devel
-  - libuser
-  - libuser-python
-  - libwnck
-  - libwnck-devel
-  - libxml2
   - libxml2-devel
-  - libxslt
-  - libxslt-devel
-  - libxslt-python
-  - lzo
-  - lzo-devel
-  - openblas
-  - openblas-devel
-  - openldap
-  - openldap-devel
-  - policycoreutils-python
-  - pygobject2
-  - pygpgme
-  - pygtk2
-  - pygtk2-devel
-  - pytalloc
-  - pytalloc-devel
-  - python-ethtool
-  - python-gudev
-  - python-hwdata
-  - python-krbV
-  - python-ldap
-  - python-sssdconfig
-  - pywebkitgtk
-# - pyxf86config   # Not found 3/24
-  - setools
-  - setools-devel
-  - setools-libs
-# - setools-libs-python  # Not found 3/24
-  - sos
-  - sssd
-  - subversion
-  - unixODBC-devel
-  - vte
-  - vte-devel
-  - wireless-tools
-  #- epic5 # for cas
-  #- hg # for cas
-  #- python-gi
-  #- subversion-devel
+  - hunspell-devel
 
-python_packages:
-  - Cython
-  #- abrt
-  # - acutil # authconfig RPM?
-  #- atk # Atk?
-  #- audit # Unknown package
-  #- auparse # Unknown package
-  - beaker
-  #- bonobo # Unknown package
-  - cairocffi
-  - Canvas
-  #- cas # Missing and unknown dependency
-  #- omniorb # CORBA
-  #- PyORBit
-  - cracklib
-  - pycrypto #Crypto
-  - pycups # cups # cupsext # cupshelpers
-  - pycurl #curl
-  - dateutils
-  - pydbus
-  # - dbus_bindings # Part of pydbus
-  - decorator
-  # - default_encoding_utf8 # No idea what this is
-  # - Dialog # No module _tkinter
-  - dmidecode
-  # - dmidecodemod
-  # - drv_libxml2
-  # - dsextras # PyORBit
-  # - dsml
-  - egg
-  - email
-  - python-ldap
-  # - ethtool # yum package
-  #- fcntl
-  - flock
-  - folium
-  # - FileDialog # tkinter
-  # - FixTk # tkinter
-  # - gconf # pkgconfig
-  - pkgconfig
-  #- gdal
-  # - gdbm - RPM
-  #- PyGObject
-  # - glib - RPM
-  # - gluster # https://github.com/joejulian/python-gluster ?
+revolution_r_packages:
+  # - car # Requires R > 3.2.0
+  # - caret # C++11 # Requires car
+  - data.table # C++11
+  - devtools #C++11
+  - dplyr #C++11
+  - httr
+  - ggplot2 #C++11
+  - jsonlite
+  - lda #C++11
+  - LDAvis #C++11
+  - RPostgreSQL
+  # - RSQLServer # Requires R > 3.2.0
+  - stringi
+  - stringr
+  # - readr #C++11 # Doesn't seem compatible with R 3.1.x or Rcpp 0.11.6
+  - tidyr #C++11
+  - slam
+  # - topicmodels  # returns non-zero exit status
+  - rzmq
+  - repr
+  # - SparkR # Installed as part of Spark
+  - pbdZMQ
 
-  # GTK stuff
-  #- gmenu
-  #- gnome
-  #- gnomeapplet
-  #- gnomecanvas
-  #- gnomekeyring
-  #- gnomevfs
-  #- gobject
-  #- gst
-  #- gstoption
-  #- gtk
-  #- gtksourceview2
-  #- gtkunixprint
-  #- gpgme # RPMS
-  #- gudev # RPM
-  #- hpmudext # Cups?
-  #- hwdata # RPM
-  #- invest # Unknown package
-  #- iotop # Python top port, no pip package
-  #- ipalib - ipapython # RPM's
-  - iniparse
-  - ipython==5.3
-  #- iwlib
-  #- ixf86config # Seems to be related to Rocks Cluster software
-  - xmpppy #- jabber
-  - jinja2
-  - kerberos
-  #- krbV # RPM
-  #- ldap # RPM
-  #- ldapurl # python-ldap RPM
-  #- ldif # python-ldap RPM
-  #- libiscsi # RPM
-  #- libproxy # RPMs
-  #- libsvn # RPM
-  #- libuser # RPM
-  - logging
-  #- libxml2-python #- libxml2mod
-  - lxml
-  - orca
-  - meh
-  - nss
-  - OpenSSL
-  - ORBit
-  #- packagekit # RPM
-  #- pango # GTK
-  #- pangocairo # GTK
-  #- pcardext # cups
-  #- PortableServer # ORB
-  #- pyatspi # Mandriva?
-  - paramiko
-  - pydocs
-  - pygst_utils
-  #- pygtk # windows
-  #- pyhbac # sssd RPM
-  - py-notify
-  #- pynum # scipy
-  - pyodbc
-  - pysolr
-  #- pysss # sssd RPM
-  #- pysss_murmur # sssd RPM
-  - pytz
-  - pyzmq
-  - readline
-  #- report # RPM
-  #- reportclient # RPM
-  #- rhn
-  - python-space
-  #- rpm # Native to RHEL
-  #- rpmUtils # Native to RHEL
-  - pyinsane #- scanext
-  - numpy
-  - scipy
-  - scikit-learn
-  #- ScrolledText # tkinter
-  # - selinux # RPM
-  #- semanage # policycoreutils-python RPM
-  #- setools # RPMs
-  #- SimpleDialog # tkinter
-  - slip
-  - pysmbclient 
-  #- pysmbc # replaced by pysmbclient
-  #- snack # tkinter
-  #- sos # RPM
-  #- sqlitecachec # sqlite3
-  #- SSSDConfig # RPM
-  #- system_config_keyboard # Anaconda?
-  - svn
-  #- talloc
-  - pip-install-test
-  #- test # replaced by pip-install-test
-  - theano
-  - timing
-  #- tkColorChooser # tkinter
-  #- tkCommonDialog # tkinter
-  #- Tkdnd # tkinter
-  #- tkFileDialog #tkinter
-  #- tkFont # tkinter
-  #- tkMessageBox # tkinter
-  #- tkSimpleDialog # tkinter
-  - tornado
-  #- urlgrabber # pycurl broken
-  - vincent
-  #- vte
-  #- webkit # RPM
-  #- wnck # RPM
-  #- xf86config RPM
-  - wsgiref
-  - pyaml
-  #- yumutils # Unknown
-  - cookiecutter
-  - luigi
-  - ansible
-  - statsmodels
-  - keras
-
-python3_packages:
-  - Cython
-  - beaker
-  - cairocffi
-  - Canvas
-  - cracklib
-  - pycrypto #Crypto
-  - pycups # cups # cupsext # cupshelpers
-  - pycurl #curl
-  - dateutils
-  - pydbus
-  - decorator
-  #- dmidecode
-  - egg
-  #- email
-  #- python-ldap
-  - flock
-  - folium
-  - pkgconfig
-  - iniparse
-  - ipython
-  - xmpppy #- jabber
-  - jinja2
-  #- kerberos
-  #- logging
-  - lxml
-  - orca
-  - ORBit
-  - paramiko
-  - pydocs #_topics
-  #- pygst_utils
-  #- py-notify
-  - pyodbc
-  - pysolr
-  - pytz
-  - pyzmq
-  - readline
-  - python-space
-  - pyinsane #- scanext
-  - numpy
-  - scipy
-  - scikit-learn
-  - slip
-  # TODO: Verify if needed
-  # - pysmbc
-  - svn
-  # TODO: Figure out what this is?
-  #- test
-  - theano
-  #- timing
-  - tornado
-  - vincent
-  #- wsgiref
-  - pyaml
-  - cookiecutter
-  - luigi
-  - statsmodels
-  - keras
-
-#======================#
-### PACKAGE SETTINGS ###
-#======================#
-postgres_install_dir: /usr/pgsql-10
-postgres_install_repository: True
-postgres_packages:
-  - postgresql10
-  - postgresql10-devel
-  - postgresql10-libs
-  - postgresql10-odbc
-
-postgres_gis_packages:
-  - geos36
-  - postgis24_10
-  - postgis24_10-devel
-  - postgis24_10-utils
-  - postgis24_10-client
- 
-postgres_old_packages:
-  - postgresql96
-  - postgresql96-libs
-  - postgresql96-devel
-  - postgresql96-contrib
-  - postgresql96-odbc
-  - postgresql96-jdbc
-  - postgresql94
-  - postgresql94-libs
-  - postgresql94-devel
-  - postgresql94-contrib
-  - postgresql94-odbc
-  - postgresql94-jdbc
-  - postgis22
-  - postgis23_95
-  - postgis23_95-devel
-  - postgis23_95-utils
-  - postgis23_95-client
-  - postgis24_96
-  - postgis24_96-devel
-  - postgis24_96-utils
-  - postgis24_96-client
-  - pgdg-redhat96
-  - pgdg-redhat95
-  - pgdg-redhat94
-
-gocd_local_bin_directory: '/artifacts'
-guass_local_bin_directory: '/artifacts'
-stattransfer_local_bin_directory: '/artifacts'
-sublime_local_artifact_directory: '/artifacts'
-stata_local_bin_directory: '/artifacts
-
-#============================#
-### ELASTICSEARCH SETTINGS ###
-#============================#
-es_cluster: enclave_cluster
-es_version: 1.7
-
-# The install command for plugins switched from "-i" to "install"
-es_plugin_install_cmd: "--install"
-es_set_conf_file: True
-
-es_admin_user: deploy
-
-es_log_level: DEBUG
-es_logging_max_files: 10
-
-# This is for installing a collector, not the server
-install_logstash: false
-
-es_heap_size: "6G"
-es_heap_newsize: "2G"
-
-es_endpoint: https://es.cfpb.dev
-es_protocol: https://
-es_hostname: es.cfpb.dev
-es_majority_num: 2
-
-# Shield settings
-es_shield_audit: "true"
-es_shield_enabled: True
-es_message_auth_enabled: True
-
-es_marvel_hostname_verification: "false"
-
-es_plugins:
+revolution_r_packages_url:
   -
-    plugin_name: org.codelibs/elasticsearch-dataformat/1.6.0
-    plugin_path: /usr/share/elasticsearch/plugins/dataformat
+    package: devtools
+    url: "https://cran.r-project.org/src/contrib/Archive/devtools/devtools_1.11.1.tar.gz"
+
+revolution_r_packages_github:
   -
-    plugin_name: elasticsearch/elasticsearch-analysis-phonetic/2.7.0
-    plugin_path: /usr/share/elasticsearch/plugins/analysis-phonetic
+    user: IRkernel
+    name: IRkernel
   -
-    plugin_name: elasticsearch/marvel/latest
-    plugin_path: /usr/share/elasticsearch/plugins/marvel
+    user: IRkernel
+    name: IRdisplay
 
-#===================#
-### GOCD SETTINGS ###
-#===================#
-go_server_address: 10.95.74.117
-gocd_agent_package_url: https://download.gocd.io/binaries/16.10.0-4131/rpm/go-agent-16.10.0-4131.noarch.rpm
-gocd_agent_package_name: go-agent-16.10.0-4131.noarch.rpm
-gocd_agent_checksum: "a8b811176dad2f5061e5a94a7929a27919b19018"
-#=========================#
-### PostgreSQL Settings ###
-#=========================#
+# Depends on C++11
+# Fails with error: object 'union_all' not found whilst loading namespace
+#  -
+#    user: RevolutionAnalytics
+#    name: dplyrXdf
 
-# Superuser
-pp_superaccount: postgres
-pp_superpassword: password
+revolution_r_commands:
+  - "IRkernel::installspec(name='revor', displayname='RevoR')"
 
-# PPAS Port
-pp_serverport: 5432
-
-pp_dba_username: deploy
-pp_dba_password: password
-
-### Database Automation packages
-db_automation_custom_packages:
-   - xsv
-   - rhobot
-#  - drake
-#  - hammerdb
-
+shiny_http_headers: "X-SHINY-USER"
