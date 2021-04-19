@@ -39,18 +39,18 @@
 - name: Install pip
   shell: python /tmp/get-pip.py
 
-- name: SCL Enable Pip Install Upgrade Pip 
-  shell: |
+#- name: SCL Enable Pip Install Upgrade Pip 
+# shell: |
 ##  Fixes pip breakage when updated >= 21.0
 #   scl enable python27 -- curl -O https://bootstrap.pypa.io/pip/2.7/get-pip.py
 #   scl enable python27 -- python get-pip.py
 #   scl enable python27 -- pip install --upgrade "pip < 21.0"
 #   scl enable python27 -- pip install --upgrade pip < 21.0
-    scl enable python27 -- pip install --upgrade pip
+##  scl enable python27 -- pip install --upgrade pip
 #   scl enable python27 bash 
 #   pip install --upgrade pip
-  become: yes
-  become_method: sudo
+# become: yes
+# become_method: sudo
 
 # Already Installed with RHEL 7
 #- name: SCL Enable Pip Install virtualenvwrapper
