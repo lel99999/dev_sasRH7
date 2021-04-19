@@ -94,7 +94,7 @@
     - name: Install python gdal bindings - Pip install gdal 2.2.3
       become: yes
       become_method: sudo
-      shell: pip3 install gdal==2.2.3
+      shell: /usr/bin/pip3.6 install gdal==2.2.3
       when: gdal.stat.exists == false
 
     - name: create necessary links with ldconfig
@@ -178,24 +178,24 @@
 
 
   roles:
-    - stataRH7
+##  - stataRH7
 #   - epel7
 #   - emacsRH7
 #   - openjdk1.8
 #   - odbc7
 #   - postgresql-client
 #   - devtools7
-    - python27RH7-System
-    - python2RH7
-    - python3RH7
-    - r_RH7
-    - postgresql-client7
+##  - python27RH7-System
+##  - python2RH7
+##  - python3RH7
+##  - r_RH7
+##  - postgresql-client7
 #   - pyenvRH7
 #   - pycharm7
 #   - gocd7
 #   - stattransfer14
 #   - r_RH7
-#   - r-studio-desktopRH7
+    - r-studio-desktopRH7
 #   - r-studio-serverRH7
 #   - r-studio-server-configRH7
 #   - r-shinyRH7
