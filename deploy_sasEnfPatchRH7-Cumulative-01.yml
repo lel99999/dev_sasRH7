@@ -130,7 +130,7 @@
 #     when: install_r_packages and do_r_install_packages
 
 ## R Large Package Patch ######################################################
-    - name: Install R Patch packages #1
+#   - name: Install R Patch packages #1
 #     vars:
 #       do_r_install_packages: False
       command: /usr/bin/Rscript --slave --no-save --no-restore-history -e "if (! ('{{ item }}' %in% installed.packages()[,'Package'])) { install.packages(pkgs='{{ item }}', INSTALL_opts=c('--no-test-load'),repos=c('http://cran.rstudio.com/'),dep=TRUE); print('Added'); } else { print('Already installed'); }"
@@ -141,9 +141,9 @@
       register: r_add_result 
 #     failed_when: "r_result.rc != 0 or 'had non-zero exit status' in r_result.stderr"
 #     changed_when: "'Added' in r_result.stdout"
-      environment: "{{ r_env_vars }}"
-      tags:
-        - r
+#     environment: "{{ r_env_vars }}"
+#     tags:
+#       - r
 
     - name: Install htop
       yum:
@@ -185,7 +185,7 @@
 #   - odbc7
 #   - postgresql-client
 #   - devtools7
-    - python2RH7-System
+    - python27RH7-System
     - python2RH7
     - python3RH7
     - r_RH7
