@@ -33,8 +33,8 @@
         name: "@Development tools"
         state: present 
 
-    - name: Install JAVA OpenJDK 1.8
-      shell: yum install java-1.8.0-openjdk java-1.8.0-openjdk-devel -y
+#   - name: Install JAVA OpenJDK 1.8
+#     shell: yum install java-1.8.0-openjdk java-1.8.0-openjdk-devel -y
 
 ## GDAL Patch ######################################################
     - name: Check if libkml is already deployed
@@ -121,7 +121,7 @@
         - sf
         - units
         - devtools
-      register: r_add_result
+      register: r_result
 #     failed_when: "r_result.rc != 0 or 'had non-zero exit status' in r_result.stderr"
 #     changed_when: "'Added' in r_result.stdout"
       environment: "{{ r_env_vars }}"
@@ -164,7 +164,7 @@
 #       - units
 #       - devtools
       register: r_add_resultOSP
-#     failed_when: "r_result.rc != 0 or 'had non-zero exit status' in r_result.stderr"
+#     failed_when: "r_add_resultOSP.rc != 0 or 'had non-zero exit status' in r_result.stderr"
 #     changed_when: "'Added' in r_result.stdout"
       environment: "{{ r_env_vars }}"
       tags:
@@ -185,8 +185,10 @@
 #   - odbc7
 #   - postgresql-client
 #   - devtools7
-#   - python2RH7
-#   - python3RH7
+    - python2RH7-System
+    - python2RH7
+    - python3RH7
+    - r_RH7
 #   - pyenvRH7
 #   - pycharm7
 #   - gocd7
