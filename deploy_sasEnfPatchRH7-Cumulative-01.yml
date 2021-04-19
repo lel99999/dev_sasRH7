@@ -178,7 +178,7 @@
 
 
   roles:
-    - postgresql-client7
+    - stataRH7
 #   - epel7
 #   - emacsRH7
 #   - openjdk1.8
@@ -189,6 +189,7 @@
     - python2RH7
     - python3RH7
     - r_RH7
+    - postgresql-client7
 #   - pyenvRH7
 #   - pycharm7
 #   - gocd7

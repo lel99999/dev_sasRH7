@@ -1,0 +1,276 @@
+---
+- name: Verify install directory
+  file:
+    path: "{{stata_install_directory}}/"
+    state: directory
+    owner: root
+    group: root
+  tags:
+    - stata
+
+- name: Ensure no installed files exist
+  file:
+    path: "{{ stata_install_directory }}/{{ item }}"
+    state: absent
+  with_items:
+    - installed.160
+    - stata
+    - xstata
+    - isstata.160
+    - ado.tar
+    - ado.tar.Z
+    - base.tar
+    - base.tar.Z
+    - bins.tar
+    - bins.tar.Z
+    - docs.tar
+    - docs.tar.Z
+  tags:
+    - stata
+      
+- name: Check install status
+  stat:
+    path: /usr/local/stata16/installed.160
+  register: stata16_installed
+
+- debug: 
+    var:  stata16_installed.stat.exists
+#   verbosity: 2
+- name: Install bash completion
+  yum:
+    name: bash-completion
+    state: present
+    
+- name: Install mailx
+  yum:
+    name: mailx
+    state: present
+
+- name: Install TexLive (LaTex) 2013
+  yum:
+    name: texlive
+    state: present
+    
+- name: Install python3 pip
+  yum:
+    name: python3-pip
+    state: present
+
+- name: Install gdown for remote download
+  shell: pip3 install gdown
+# pip:
+#   name: gdown
+#   state: latest
+ 
+#- name: Install gdown for remote download (SCL)
+# become: yes
+# become_method: sudo
+# shell: |
+#   scl enable python27 -- pip install gdown 
+
+- name: use gdown to download tar file
+  shell: /usr/local/bin/gdown https://drive.google.com/uc?id=1yB-zBR55s_9eOfOVgfU6doXYk_YP_FAw -O /tmp/Stata16Linux64.tar.gz
+# shell: gdown https://drive.google.com/uc?id=1qaZH9_SrGyjHjWT3P2WtvZAhEkP9YG1Z -O /tmp/ancilRH7_repo.tar.gz
+#     when: stage == "DEV_LOCAL"
+#       stage values = { "DEV_LOCAL","DEV", "PROD" }
+
+- name: Unarchive the stata tarball
+  unarchive:
+#   copy: yes     ### deprecated to remote_src
+    src: "/tmp/{{ stata_tarball }}"
+#   src: "{{ stata_local_bin_directory }}/{{ stata_tarball }}"
+    dest: "{{ stata_install_directory }}/"
+    remote_src: yes
+  when: custom_repo
+  tags:
+    - stata
+
+- name: Set permissions for the install script
+  file:
+    path: "{{ stata_install_directory }}/install"
+    mode: 0755
+  when: custom_repo
+  tags:
+    - stata
+
+#- name: SCL Enable Pip Install Upgrade Pip
+# shell: |
+#   scl enable python27 -- pip install --upgrade pip
+# become: yes
+# become_method: sudo
+
+# Already Installed with RHEL 7
+#- name: SCL Enable Pip Install virtualenvwrapper
+#  shell: |
+#    scl enable python27 -- pip install virtualenvwrapper
+#  become: yes
+#  become_method: sudo
+
+# name: SCL enable
+# shell:  source /opt/rh/devtoolset-7/enable
+
+#- name: pip install pexpect
+#  shell: pip install pexpect
+    
+- name: Install python2 pip
+  yum:
+    name: python2-pip
+    state: present
+
+- name: Install ptyprocess
+  yum:
+    name: "{{ item }}" 
+#   name: python2-ptyprocess
+    state: present
+  with_items:
+    - python2-ptyprocess
+    - python3-devel
+#   - python3-pytest
+    - python3*-ptyprocess
+
+# shell: pip3 install pexpect
+# pip:
+#   name: pexpect
+#   executable: /usr/bin/pip
+#  tags:
+#    - stata
+
+#- name: SCL Enable shell
+# shell: scl enable pythob27 bash &
+- name: Pip install pexpect
+  shell: pip install pexpect
+
+#- name: Install pip
+#  yum:
+#    name: python-pip
+#    state: present
+#  tags:
+#    - stata
+  
+- name: Pip3 install pexpect
+  shell: pip3 install pexpect
+# pip:
+#   name: pexpect
+#   executable: /usr/bin/pip
+# tags:
+#   - stata
+ 
+#- name: Set temporary permissions for the install script
+# file:
+#   path: "/usr/local/stata16"
+#   mode: 0777
+#   state: directory
+#   recurse: yes
+# when: custom_repo
+# tags:
+#   - stata
+
+- name: expect install stata16
+  become: yes
+  become_method: sudo
+  expect:
+    chdir: "{{ stata_install_directory }}"
+#   command: /bin/bash -c ./install
+    command: /bin/bash -c /usr/local/stata16/install
+#    shell: |
+#      scl enable python27 bash
+#      /bin/bash -c /usr/local/stata16/install
+    timeout: 200
+    responses:
+        '.*Do you wish to continue.*': 'y'
+        '.*Are you sure you want to install into*': 'y' 
+        '.*Okay to proceed.*': 'y'
+  register: expected
+# failed_when: expected.rc != 0 and "no action taken" not in expected.stdout
+  when: custom_repo and stata16_installed.stat.exists == false
+  tags:
+    - stata
+
+- debug: msg="{{ expected.rc }}"
+   
+#- debug: msg="{{ expected.stdout }}"
+
+- name: Add the update do file
+  template:
+    src: stataupdate.do.j2
+    dest: "{{ stata_install_directory }}/stataupdate.do"
+  when: stata_patch_update
+  tags:
+    - stata
+
+- name: Run the update do file (checks for updates, installs and restarts stata if updated)
+  shell: "{{ stata_install_directory }}/stata-mp -b {{ stata_install_directory }}/stataupdate.do"
+  when: custom_repo and stata_patch_update
+  tags:
+    - stata
+
+- name: Update permissions
+  file:
+    path: "{{ stata_install_directory }}"
+    recurse: yes
+    state: directory
+    mode: "0755"
+  tags:
+    - stata
+
+- name: expect stinit
+  expect:
+    chdir: "{{ stata_install_directory }}"
+#   command: /bin/bash -c /usr/local/stata16/stinit
+    command: /bin/bash -c ./stinit
+    responses:
+      '.*Do you agree to the License terms.*': 'Y'
+      '.*Do you wish to continue.*': 'Y'
+      '.*Serial number:.*': '{{ stata_serial_number }}'
+      '.*Code:.*': '{{ stata_code }}'
+      '.*Authorization:.*': '{{ stata_authorization }}'
+      '.*Shall we continue.*': 'Y'
+      '.*Enter what you would like the first line to say:.*': '{{ stata_line_one }}'
+      '.*Enter what you would like the second line to say:.*': '{{ stata_line_two  }}'
+      '.*Is this okay.*': 'Y'
+  when: custom_repo and stata16_installed.stat.exists == false
+  tags:
+    - stata
+
+# Do we need to source this?
+- name: Copy configure_stata to /etc/profile.d
+  template:
+    src: configure_stata.sh
+    dest: /etc/profile.d/configure_stata.sh
+  when: custom_repo and stata16_installed.stat.exists == false
+  tags:
+    - stata
+
+- name: Create symlink
+  file:
+    state: link
+    src: "{{ stata_install_directory }}"
+    dest: "{{ stata_directory }}"
+  when: custom_repo and stata16_installed.stat.exists == false
+  tags:
+    - stata
+
+- name: Copy sysprofile
+  template:
+    src: sysprofile.do.j2
+    dest: "{{ stata_directory }}/sysprofile.do"
+    mode: 0644
+  when: custom_repo and stata16_installed.stat.exists == false
+  tags:
+    - stata
+
+- name: Remove the tarball
+  file:
+    path: "/tmp/{{ stata_tarball }}"
+    state: absent
+  tags:
+    - stata
+
+- name: Check do shared directory
+  stat:
+    path: /home/work/shared_ado
+  register: do_path
+
+- debug:
+    msg: "Shared Do Path Exists"
+  when: do_path.stat.exists and do_path.stat.isdir
