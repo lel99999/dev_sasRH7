@@ -182,8 +182,7 @@
 #   - epel7
 #   - emacsRH7
 #   - openjdk1.8
-#   - odbc7
-#   - postgresql-client
+    - odbc7
 #   - devtools7
 ##  - python27RH7-System
 ##  - python2RH7
@@ -194,12 +193,12 @@
 #   - pycharm7
 #   - gocd7
 #   - stattransfer14
-#   - r_RH7
-    - r-studio-desktopRH7
+##  - r-studio-desktopRH7
 #   - r-studio-serverRH7
 #   - r-studio-server-configRH7
 #   - r-shinyRH7
 #   - r-shiny-configRH7
+    - chromeRH7
 
 # hosts: research_python
 # become: yes
