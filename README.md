@@ -166,3 +166,6 @@ Click Save to Save to Home folder <br/>Log into SAS Interactive to verify log ou
 
 #### Troubleshooting with SAS Logs
 View deployment files in <SASHome>/InstallMisc/InstallLogs <br/>
+
+#### SAS T1M7 Deploy Fix
+An Error occurs on SAS Studio Basic Deployment <br/>
