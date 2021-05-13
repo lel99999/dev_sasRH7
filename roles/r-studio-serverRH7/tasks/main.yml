@@ -8,14 +8,14 @@
 
 - name: Take server offline
   command: "rstudio-server offline"
-  when: update_rstudio
+# when: update_rstudio
   ignore_errors: yes
   tags:
     - rstudio-server
 
 - name: Suspend user sessions
   command: "rstudio-server force-suspend-all"
-  when: update_rstudio
+# when: update_rstudio
   ignore_errors: yes
   tags:
     - rstudio-server
@@ -33,19 +33,19 @@
     update_cache: yes
     disable_gpg_check: yes
     validate_certs: no
-  when: update_rstudio
+# when: update_rstudio
   tags:
     - rstudio-server
 
 - name: Verify install
   command: "rstudio-server verify-installation"
-  when: update_rstudio
+# when: update_rstudio
   tags:
     - rstudio-server
 
 - name: Take server online
   command: "rstudio-server online"
-  when: update_rstudio
+# when: update_rstudio
   tags:
     - rstudio-server
 
@@ -53,7 +53,7 @@
   yum:
     name: python-pip
     state: present
-  when: install_pro_drivers
+# when: install_pro_drivers
   tags:
     - rstudio-server
 
@@ -61,7 +61,7 @@
   pip:
     name: pexpect
     executable: /usr/bin/pip
-  when: install_pro_drivers
+# when: install_pro_drivers
   tags:
     - rstudio-server
 
@@ -75,7 +75,7 @@
   get_url:
     url: "{{ rstudio_pro_drivers_url }}"
     dest: "{{ rstudio_pro_drivers_folder }}"
-  when: install_pro_drivers
+# when: install_pro_drivers
   tags:
     - rstudio-server
 
@@ -83,7 +83,7 @@
   file: 
     path: "{{ rstudio_pro_drivers_folder }}/{{ rstudio_pro_driver_install_name }}"
     mode: "a+x"
-  when: install_pro_drivers
+# when: install_pro_drivers
   tags:
     - rstudio-server
 
@@ -93,7 +93,7 @@
     responses:
       'y/n' : 'y'
     timeout: 300
-  when: install_pro_drivers
+# when: install_pro_drivers
   tags:
     - rstudio-server
   
