@@ -1,0 +1,250 @@
+- hosts: research_environment
+  vars:
+    use_epel: true
+    custom_repo: true
+    deploy_iptables: true
+    envir: prod
+# vars_files:
+#   - ~/RHACCOUNT
+  become: yes
+  become_method: sudo
+
+  pre_tasks:
+    - name: register RHEL7 repo
+      command: "/usr/bin/subscription-manager repos --enable=rhel-7-server-rpms --enable=rhel-7-server-extras-rpms --enable=rhel-7-server-optional-rpms"
+    - name: register RHEL7 RHSCL Repo
+      shell: "/usr/bin/subscription-manager repos --enable=rhel-server-rhscl-7-rpms"
+    - name: register RHEL7 DevTools
+      shell: "/usr/bin/subscription-manager repos --enable=rhel-7-server-devtools-rpms"
+    - name: list RHEL enabled repos
+      shell: "/usr/bin/subscription-manager repos --list-enabled"
+      register: enabled_repos
+    - debug:
+        msg: "RHEL Enabled Repos: {{ enabled_repos }}"
+  tasks:
+#   - name: Install X Windows
+#     yum:
+#       name: "@X Window System"
+#       state: present
+
+#   - name: Install JAVA OpenJDK 1.8
+#     shell: yum install java-1.8.0-openjdk java-1.8.0-openjdk-devel -y
+
+    - name: Install R Patch packages
+#     vars:
+#       do_r_install_packages: False
+      command: /usr/bin/Rscript --slave --no-save --no-restore-history -e "if (! ('{{ item }}' %in% installed.packages()[,'Package'])) { install.packages(pkgs='{{ item }}', INSTALL_opts=c('--no-test-load'),repos=c('http://cran.rstudio.com/'),dep=TRUE); print('Added'); } else { print('Already installed'); }"
+      with_items:
+        - sf
+        - units
+        - devtools
+      register: r_result
+#     failed_when: "r_result.rc != 0 or 'had non-zero exit status' in r_result.stderr"
+#     changed_when: "'Added' in r_result.stdout"
+      environment: "{{ r_env_vars }}"
+      tags:
+        - r
+#     when: install_r_packages and do_r_install_packages
+
+    - name: Ensure epel 7 is installed
+      yum:
+        name: https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+        state: present
+
+  roles:
+##  - stataRH7
+#   - epel7
+#   - emacsRH7
+#   - openjdk1.8
+    - odbc7
+#   - devtools7
+##  - python27RH7-System
+##  - python2RH7
+##  - python3RH7
+##  - r_RH7
+##  - postgresql-client7
+#   - pyenvRH7
+#   - pycharm7
+#   - gocd7
+#   - stattransfer14
+##  - r-studio-desktopRH7
+    - r-studio-serverRH7
+    - r-studio-server-configRH7
+    - r-shinyRH7
+    - r-shiny-configRH7
+#   - chromeRH7
+
+# hosts: research_python
+# become: yes
+# become_method: sudo
+# roles:
+#   - devtools
+#   - devtools6
+#   - {role: python, when: "custom_repo"}
+#   - {role: python-build, when: "not custom_repo"}
+#   - {role: python3, when: "custom_repo"}
+#   - {role: python3-build, when: "not custom_repo"}
+#   - {role: python-libs}
+#   - postgresql-client
+#   - r-core
+#   - r-libs
+#   - r-studio-desktop
+#   - r-studio-server
+#   - r-studio-server-config
+#   - pycharm
+#   - gocd
+#   - stattransfer14
+
+
+
+  post_tasks:
+#   - name: register mime types
+#     shell: update-mime-database /usr/share/mime/packages/
+
+#   - name: remove RHEL7.5
+#     command:  "/usr/bin/subscription-manager remove --all"
+#   - name: unregister RHEL7.5
+#     command:  "/usr/bin/subscription-manager unregister"
+#   - name: clean RHEL7.5
+#     command:  "/usr/bin/subscription-manager clean"7
+
+#########################################################  Python Package Updates ##############################################################
+### - name: Install Python dep packages
+#   - name: SCL Enable Pip Install
+#     shell: |
+#       scl enable python27 -- pip install "{{ python_dep_packages_mod }}"
+#     become: yes
+#     become_method: sudo
+###   pip:
+###     name: "{{ python_dep_packages_mod }}"
+###     state: present
+###     executable: /usr/local/bin/pip
+##      executable: /opt/rh/python27/root/usr/bin/pip
+##       executable: "{{ python_pip_bin }}"
+#    # when: install_python
+#      tags:
+#        - python-libs
+#        - python2-libs
+
+### - name: Install Python packages for 27
+###   pip:
+###     name: "{{ python_packages }}"
+###     state: present
+###     executable: /usr/local/bin/pip
+##      executable: /opt/rh/python27/root/usr/bin/pip
+##      executable: "{{ python_pip_bin }}"
+#   # when: install_python
+#     tags:
+#       - python-libs
+#       - python2-libs
+#
+    - name: Install Python packages for 36
+      pip:
+        name: "{{ item }}"
+#       name: "{{ python3_packages }}"
+        state: present
+        executable: /usr/bin/pip3
+##      executable: "{{ python3_pip_bin }}"
+#   # when: install_python
+#     tags:
+#       - python-libs
+#       - python3-libsp
+      with_items:
+        - ['Cython','beaker','cairocffi','Canvas','cracklib','pycrypto','pycurl','dateutils','pydbus','decorator','egg','flock','folium','pkgconfig','iniparse','ipython','xmpppy']
+# Remove pycups
+#       - ['Cython','beaker','cairocffi','Canvas','cracklib','pycrypto','pycups','pycurl','dateutils','pydbus','decorator','egg','flock','folium','pkgconfig','iniparse','ipython','xmpppy']
+        - ['jinja2','lxml','orca','ORBit','paramiko','pydocs','pyodbc','pysolr','pytz','pyzmq','readline','python-space','pyinsane','numpy','scipy','scikit-learn','slip','svn','theano',]
+        - ['tornado','vincent','pyaml','cookiecutter','luigi','statsmodels','keras']
+#      loop:
+#        - Cython
+#        - beaker
+#        - cairocffi
+#        - Canvas
+#        - cracklib
+#        - pycrypto
+#        - pycups
+#        - pycurl
+#        - dateutils
+#        - pydbus
+#        - decorator
+#        - egg
+#        - flock
+#        - folium
+#        - pkgconfig
+#        - iniparse
+#        - ipython
+#        - xmpppy
+#        - jinja2
+#        - lxml
+#        - orca
+#        - ORBit
+#        - paramiko
+#        - pydocs
+#        - pyodbc
+#        - pysolr
+#        - pytz
+#        - pyzmq
+#        - readline
+#        - python-space
+#        - pyinsane
+#        - numpy
+#        - scipy
+#        - scikit-learn
+#        - slip
+#        - svn
+#        - theano
+#        - tornado
+#        - vincent
+#        - pyaml
+#        - cookiecutter
+#        - luigi
+#        - statsmodels
+#        - keras
+
+##########################################################  Python Package Updates ##############################################################
+
+##########################################################  R-Package Updates ##############################################################
+
+    - name: Install R packages
+      command: /usr/bin/Rscript --slave --no-save --no-restore-history -e "if (! ('{{ item }}' %in% installed.packages()[,'Package'])) { install.packages(pkgs='{{ item }}', INSTALL_opts=c('--no-test-load'),repos=c('http://cran.rstudio.com/'),dep=TRUE); print('Added'); } else { print('Already installed'); }"
+      with_items: "{{ r_packages }}"
+      register: r_result
+      failed_when: "r_result.rc != 0 or 'had non-zero exit status' in r_result.stderr"
+      changed_when: "'Added' in r_result.stdout"
+
+    - name: Install R packages with opts
+    # vars:
+    #   do_r_install_w_opts: False
+      command: /usr/bin/Rscript --slave --no-save --no-restore-history -e "if (! ('{{ item.name }}' %in% installed.packages()[,'Package'])) { install.packages(pkgs='{{ item.name }}', configure.args='--with-{{ item.name }}-lib={{ item.lib }}, --with-{{ item.name }}-include={{ item.include}}', INSTALL_opts=c('--no-test-load'),repos=c('http://cran.rstudio.com/'),dep=TRUE); print('Added'); } else { print('Already installed'); }"
+      with_items: "{{ r_packages_with_opts }}"
+      register: r_result
+      failed_when: "r_result.rc != 0 or 'had non-zero exit status' in r_result.stderr"
+      changed_when: "'Added' in r_result.stdout"
+    # environment: "{{ r_env_vars }}"
+    # tags:
+    #   - r
+    # when: install_r_packages and do_r_install_w_opts
+
+    - name: Fix libcurl error
+      yum:
+        name: libcurl-devel
+        state: present
+    # tags:
+    #   - r
+
+    - name: Install R packages from Github
+    # vars:
+    #   do_r_install_github: False
+      command: /usr/bin/Rscript --slave --no-save --no-restore-history -e "if (! ('{{ item.name }}' %in% installed.packages()[,'Package'])) { install.packages(pkgs='{{ item.name }}', repos=c('http://cran.rstudio.com/')); print('Added'); } else { print('Already installed'); }"
+    # command: /usr/bin/Rscript --slave --no-save --no-restore-history -e "library(devtools); if (! ('{{ item.name }}' %in% installed.packages()[,'Package'])) { install_github('{{ item.user }}/{{ item.name }}'); print('Added'); } else { print('Already installed'); }"
+      with_items: "{{ r_packages_github }}"
+      register: r_github_result
+      failed_when: "r_github_result.rc != 0 or 'had non-zero exit status' in r_github_result.stderr"
+      changed_when: "'Added' in r_github_result.stdout"
+    # environment: "{{ r_env_vars }}"
+    # tags:
+    #   - r
+    # when: install_r_packages and do_r_install_github
+
+##########################################################  R-Package Updates ###################################################################
+
