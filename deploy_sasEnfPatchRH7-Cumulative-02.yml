@@ -138,23 +138,23 @@
 #       - python-libs
 #       - python2-libs
 #
-    - name: Install Python packages for 36
-      pip:
-        name: "{{ item }}"
+#   - name: Install Python packages for 36
+#     pip:
+#       name: "{{ item }}"
 #       name: "{{ python3_packages }}"
-        state: present
-        executable: /usr/bin/pip3
+#       state: present
+#       executable: /usr/bin/pip3
 ##      executable: "{{ python3_pip_bin }}"
 #   # when: install_python
 #     tags:
 #       - python-libs
 #       - python3-libsp
-      with_items:
-        - ['Cython','beaker','cairocffi','Canvas','cracklib','pycrypto','pycurl','dateutils','pydbus','decorator','egg','flock','folium','pkgconfig','iniparse','ipython','xmpppy']
+#     with_items:
+#       - ['Cython','beaker','cairocffi','Canvas','cracklib','pycrypto','pycurl','dateutils','pydbus','decorator','egg','flock','folium','pkgconfig','iniparse','ipython','xmpppy']
 # Remove pycups
 #       - ['Cython','beaker','cairocffi','Canvas','cracklib','pycrypto','pycups','pycurl','dateutils','pydbus','decorator','egg','flock','folium','pkgconfig','iniparse','ipython','xmpppy']
-        - ['jinja2','lxml','orca','ORBit','paramiko','pydocs','pyodbc','pysolr','pytz','pyzmq','readline','python-space','pyinsane','numpy','scipy','scikit-learn','slip','svn','theano',]
-        - ['tornado','vincent','pyaml','cookiecutter','luigi','statsmodels','keras']
+#       - ['jinja2','lxml','orca','ORBit','paramiko','pydocs','pyodbc','pysolr','pytz','pyzmq','readline','python-space','pyinsane','numpy','scipy','scikit-learn','slip','svn','theano',]
+#       - ['tornado','vincent','pyaml','cookiecutter','luigi','statsmodels','keras']
 #      loop:
 #        - Cython
 #        - beaker
