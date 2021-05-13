@@ -14,7 +14,7 @@
 
 - name: Create directory if it doesn't exist
   shell: mkdir -p /etc/rstudio
-  when: !etc_rstudio.stat.exists
+  when: not etc_rstudio.stat.exists
 
 - name: Add ip whitelist
   template:
