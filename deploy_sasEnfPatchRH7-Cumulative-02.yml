@@ -67,7 +67,7 @@
 #   - pycharm7
 #   - gocd7
 #   - stattransfer14
-##  - r-studio-desktopRH7
+    - r-studio-desktopRH7
     - r-studio-serverRH7
     - r-studio-server-configRH7
     - r-shinyRH7
