@@ -7,6 +7,15 @@
   tags:
     - rstudio-server
 
+- name: Check if /etc/rstudio exists
+  stat:
+    path: /etc/rstudio
+  register: etc_rstudio
+
+- name: Create directory if it doesn't exist
+  shell: mkdir -p /etc/rstudio
+  when: !etc_rstudio.stat.exists
+
 - name: Add ip whitelist
   template:
     src: ip-rules.j2
